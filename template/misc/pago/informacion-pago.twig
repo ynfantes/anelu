@@ -1,0 +1,161 @@
+<input type="hidden" id="estatus" name="estatus" value="P" class="">
+<input type="hidden" id="enviado" name="enviado" value="0" class="">
+<div class="form-row">
+    <div class="col-md-4 mb-3">
+        <label for="tipo_pago">Forma de Pago <span class="text-danger">*</span></label>
+        <select class="form-control" id="tipo_pago" name="tipo_pago" required>
+            <option value='T' select>TRASNSFERENCIA</option>
+            <option value='D'>DEPÓSITO</option>
+        </select>
+        <div class="invalid-feedback"></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="numero_documento">Número de Referencia <span class="text-danger">*</span> <span class="help-block">(solo números)</span></label>
+        <input
+            class="form-control" 
+            id="numero_documento"
+            maxlength="11"
+            name= "numero_documento"
+            pattern="[0-9]{4,11}"
+            required
+            type="text"
+            value="{{propietario.telefono2}}"
+        />
+        <div class="invalid-feedback"></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="numero_cuenta">Cuenta Destino <span class="text-danger">*</span> <span class="help-block">(solo números)</span></label>
+        {% if cuentas[0].inmueble.cuentas_bancarias|length > 1 %}
+            <select class="form-control" id="numero_cuenta" name="numero_cuenta" required>
+                {% set dato = '' %}
+                {% for cuenta in cuentas[0].inmueble.cuentas_bancarias %}
+                {% if dato != cuenta.numero_cuenta %}
+                <option value="{{cuenta.numero_cuenta}}" data-bind="{{cuenta.banco}}">{{cuenta.numero_cuenta}}</option>
+                {% endif %}
+                {% set dato = cuenta.numero_cuenta %}
+                {% endfor %}
+            </select>
+        {% else %}
+            <input
+                class="form-control" 
+                maxlength="20" 
+                minlength="20" 
+                name= "numero_cuenta" 
+                required
+                type="text" 
+                value="{{ cuentas[0].inmueble.numero_cuenta }}"
+            />
+        {% endif %}
+        <div class="invalid-feedback"></div>
+    </div>
+
+</div>
+<div class="form-row">
+    <div class="col-md-4 mb-3 form-group">
+        <label class="form-label" for="fecha_documento">Fecha del pago <span class="text-danger">*</span></label>
+        <input
+            id="fecha_documento" 
+            class="form-control" 
+            name="fecha_documento"
+            required 
+            type="date"
+            value=""
+        />
+        <div class="invalid-feedback"></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="banco_origen">Banco Origen <span class="text-danger">*</span></label>
+        <select class="form-control" id="banco_origen" name="banco_origen" required>
+        <option value="">SELECCIONE UN BANCO DE LA LISTA</option>
+        {% for banco in bancos %}
+        <option value="{{banco.nombre}}" data-bind="{{banco.nombre}}">{{banco.nombre|upper}}</option>
+        {% endfor %}
+        </select>
+        <div class="invalid-feedback"></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="banco_destino">Banco Destino</label>
+        {% if cuentas[0].inmueble.cuentas_bancarias|length > 1 %}
+            <select class="form-control" id="banco_destino" name="banco_destino" required>
+            {% set dato = '' %}
+            {% for cuenta in cuentas[0].inmueble.cuentas_bancarias %}
+                {% if dato != cuenta.banco %}
+                <option value="{{cuenta.banco}}" data-bind="{{cuenta.numero_cuenta}}">{{cuenta.banco}}</option>
+                {% endif %}
+                {% set dato = cuenta.banco %}
+            {% endfor %}
+            </select>
+        {% else %}
+            <input
+                class="form-control" 
+                maxlength="20" 
+                minlength="20" 
+                name= "banco_destino" 
+                required
+                type="text" 
+                value="{{ cuentas[0].inmueble.banco }}"
+            />
+        {% endif %}
+        <div class="invalid-feedback"></div>
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-4 mb-3 form-group">
+        <label for="monto">Monto <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input
+                aria-label="Amount (to the nearest dollar)"
+                class="form-control" 
+                id="monto" 
+                name="monto"
+                required
+                type="text" 
+            />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="banco_origen">Correo Electrónico <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+            </div>
+            <input 
+                aria-describedby="Correo-Electrónico"
+                aria-label="Correo Electrónico" 
+                class="form-control" 
+                email
+                id="email" 
+                name="email"
+                required
+                type="email" 
+            />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="telefono">Número Celular <span class="text-danger">*</span> <span class="help-block">(solo números)</span></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fal fa-mobile fs-xl"></i></span>
+            </div>
+            <input 
+                aria-describedby="numero-telefonico"
+                aria-label="Número Celular" 
+                class="form-control" 
+                id="telefono"
+                maxlength="11"
+                minlength="11"
+                name="telefono"
+                pattern="[0-9]{11}" 
+                required
+                tel
+                type="tel" 
+            />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+</div>

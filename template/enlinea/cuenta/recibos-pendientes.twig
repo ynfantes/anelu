@@ -1,0 +1,144 @@
+{% extends 'layout/app.base.twig' %}
+{% block contenido %}
+{% if cuentas %}
+
+    {% for condominio in cuentas %}
+
+        <div class="panel">
+            <div class="panel-hdr">
+                <h2>
+                    <a href="javascript: void(0)">{{condominio.inmueble.nombre_inmueble}}</a> {{"-  #{condominio.inmueble.unidad}: #{condominio.propiedades.apto}"}}
+                </h2>
+                <div class="panel-toolbar">
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                </div>
+            </div>
+            <div class="panel-container show">
+                <div class="panel-content">
+                    <div class="row">
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
+                            <div class="">
+                                <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                                    {{format_number(condominio.propiedades.deuda_total)}}
+                                    <small class="m-0 l-h-n">Total Deuda en {{spaceIzq(condominio.inmueble.moneda)}}</small>
+                                </h3>
+                            </div>
+                            <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
+                        </div>
+                        {% if fact_usd %}
+                        <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+                            <div class="">
+                                <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                                    {{condominio.propiedades.deuda_usd|number_format(2,'.')}}
+                                    <small class="m-0 l-h-n">Total Deuda en $</small>
+                                </h3>
+                            </div>
+                            <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-9 col-xl-9">
+                        
+                        {% if not condominio.propiedades is empty %}
+                            {% set fact_usd = (condominio.inmueble.facturacion_usd == '1') and (condominio.inmueble.moneda == 'Bs') %}
+                            <table class="table table-striped table-bordered table-sm">
+                                <thead class="thead-light">
+                                    <tr class='text-center'>
+                                        <th>Nº Fact.</th>
+                                        <th>Período</th>
+                                        <th>{{'Facturado %s'|format(condominio.inmueble.moneda)}}  </th>
+                                        <th>{{'Pagado %s'|format(condominio.inmueble.moneda)}}</th>
+                                        <th>{{'Saldo %s'|format(condominio.inmueble.moneda)}}</th>
+                                        {% if fact_usd %}
+                                        <th>Deuda USD</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set total = { facturado: 0, pagado:0, deuda_usd:0, recibos:0 } %}
+                                    
+                                    {% for item in condominio.cuentas %}
+                                        {% 
+                                        set total = {
+                                            facturado:  total.facturado + item.facturado,
+                                            pagado: total.pagado + item.abonado,
+                                            deuda_usd:  total.deuda_usd + item.facturado_usd,
+                                            recibos:   total.recibos + item.recibos
+                                            } 
+                                        %}    
+                                        <tr>
+                                            <td class="text-center">
+                                                {% if item.aviso %}
+                                                    <a href="{{constant('URL_SISTEMA')}}avisos/ver/{{ item.numero_factura}}" target="_blank">{{item.numero_factura}}</a>
+                                                {% else %}
+                                                    <abbr title="Aviso de Cobro NO DISPONIBLE" class="initialism">{{item.numero_factura}}</abbr>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">{{item.periodo| date("m-Y")}}</td>
+                                            <td class="text-right">{{format_number(item.facturado,2) }}</td>
+                                            <td class="text-right">{{format_number(item.abonado,2) }}</td>
+                                            <td class="text-right">{{format_number(item.facturado - item.abonado,2) }}</td>
+                                            {% if fact_usd %}
+                                            <td class="text-right">{{item.facturado_usd|number_format(2,'.') }}</td>
+                                            {% endif %}
+                                        </tr>
+                                        {% flush %}
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot class="tfoot-light">
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-right">{{format_number(total.facturado) }}</td>
+                                        <td class="text-right">{{format_number(total.pagado) }}</td>
+                                        <td class="text-right">{{format_number(total.facturado - total.pagado) }}</td>
+                                        {% if fact_usd %}
+                                        <td class="text-right">{{total.deuda_usd|number_format(2,'.') }}</td>
+                                        {% endif %}
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        {% else %}
+                            <div class="alert alert-warning alert-dismissible fade show">
+                                <div class="d-flex align-items-center">
+                                    <div class="alert-icon width-6">
+                                        <span class="icon-stack icon-stack-lg">
+                                            <i class="base-2 icon-stack-3x color-warning-400"></i>
+                                            <i class="base-10 text-white icon-stack-1x"></i>
+                                            <i class="ni md-profile color-warning-800 icon-stack-2x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="h3">No hemos encontrado la inforamción solicitada</span>
+                                        <br>
+                                        Ha ocurrido un error mientras consultábamos el estado de cuenta general del condominio.
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel-content py-2 rounded-bottom border-faded border-left-0 border-right-0 border-bottom-0 text-muted d-flex">
+                    <span class="fw-400 mr-2">
+                        {{'CUENTA <strong>%s %s</strong>'|format(condominio.inmueble.banco, formatAccount(condominio.inmueble.numero_cuenta))|raw}}
+                    </span>
+                    <span class="badge badge-warning badge-secondary fw-400 ml-auto mr-2" style="line-height:3">
+                        Recibos pendientes: <strong>{{condominio.propiedades.meses_pendiente}}</strong>
+                    </span>
+                    {# <span class="badge badge-warning fw-400 px-1">
+                        Recibos pendientes: {{condominio.propiedades.meses_pendiente}}
+                    </span> #}
+                    <a href="{{constant('URL_SISTEMA')}}pago/registrar" class="btn btn-success btn-xl waves-effect waves-themed" data-class="d-none">
+                        Reportar pago
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    {% endfor %}
+
+{% endif %}
+{% endblock %}

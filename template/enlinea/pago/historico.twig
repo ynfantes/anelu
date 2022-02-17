@@ -1,0 +1,78 @@
+{% extends 'layout/app.base.twig' %}
+{% block contenido %}
+{% set n = 0 %}
+    {% for historico in historicos %}
+
+        <div class="panel">
+            <div class="panel-hdr">
+                <h2>
+                {{'<a href="javascript: void(0)">%s</a> - %s: %s'|format(
+                    historico.inmueble.nombre_inmueble, 
+                    historico.inmueble.unidad,
+                    historico.propiedad.apto)|raw}}
+                </h2>
+                <div class="panel-toolbar">
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                </div>
+            </div>
+            <div class="panel-container show">
+                <div class="panel-content">
+                    
+                    {% if historico.pagos is empty %}
+
+                        <div class="alert alert-warning alert-dismissible fade show">
+                            <div class="d-flex align-items-center">
+                                <div class="alert-icon width-6">
+                                    <span class="icon-stack icon-stack-lg">
+                                        <i class="base-2 icon-stack-3x color-warning-400"></i>
+                                        <i class="base-10 text-white icon-stack-1x"></i>
+                                        <i class="ni md-profile color-warning-800 icon-stack-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-1">
+                                    <span class="h3">Información no registrada</span>
+                                    <br>
+                                    No se han registrado pagos en su cuenta de condominio.
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <table class="table table-striped table-bordered table-hover table-sm">
+                            <thead class="thin-border-bottom">
+                                <th class="text-center">Fecha</th>
+                                <th class="hidden-xs" style="text-align: center">Recibo</th>
+                                <th class="text-center">Monto</th>
+                                <th class="text-center">Forma Pago</th>
+                                <th class="text-center">Cuenta</th>
+                                <th class="text-center">Descripción</th>
+                            </thead>
+                            <tbody>
+                                {% for pago in historico.pagos %}
+                                <tr>
+                                <td class="text-center">{{pago.fecha_movimiento | date("d-m-y")}}</td>
+                                <td class="hidden-xs text-center" >
+                                    {% if pago.recibo %}
+                                        <a href="{{constant('URL_SISTEMA')}}/pago/cancelacion/{{pago.numero_recibo}}" target="_blank">{{pago.numero_recibo}}</a>
+                                    {% else %}
+                                        {{pago.numero_recibo}}
+                                    {%endif%}
+                                </td>
+                                <td class='text-right'>{{format_number(pago.monto)}}</td>
+                                <td>{{pago.forma_pago}}</td>
+                                <td>{{pago.cuenta}}</td>
+                                <td>{{pago.descripcion}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                    {% set n = n + 1 %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

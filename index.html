@@ -1,0 +1,1013 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Administradora Anelu</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/favicon.png">
+    <!-- CSS
+		============================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS >
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- FontAwesome CSS >
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="assets/css/flaticon.min.css">
+    <!-- Slick Slider CSS >
+    <link rel="stylesheet" href="assets/css/plugins/slick.min.css">
+    <!-- CSS Animation CSS >
+    <link rel="stylesheet" href="assets/css/plugins/cssanimation.min.css">
+    <!-- Justified Gallery CSS >
+    <link rel="stylesheet" href="assets/css/plugins/justifiedGallery.min.css">
+    <!-- Light Gallery CSS >
+    <link rel="stylesheet" href="assets/css/plugins/light-gallery.min.css">
+    <!-- Vendor & Plugins CSS (Please remove the comment from below vendor.min.css & plugins.min.css for better website load performance and remove css files from avobe) -->
+        
+    <link rel="stylesheet" href="assets/css/vendor.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
+    <link rel="stylesheet" media="screen, print" href="assets/css/notifications/sweetalert2/sweetalert2.bundle.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .swal2-title {font-size: 2.0625em;font-family: "Rajdhani", sans-serif;}
+        .swal2-content {font-size:1.3em;font-family: "Rajdhani", sans-serif;}
+        .swal2-styled.swal2-confirm {
+            font-size: 20px;
+            font-weight:bolder;
+            line-height: 1;
+            display: inline-block;
+            padding: 15px 20px;
+            color: #2B2D37;
+            border: none;
+            background: none;
+            background: #fabc3d;
+            font-family: "Rajdhani", sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!--====================  header area ====================-->
+    <div class="header-area header-sticky bg-img space__inner--y40 background-repeat--x background-color--dark d-none d-lg-block" data-bg="">
+        <!-- header top -->
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="header-top-info">
+                            <span class="header-top-info__image pr-1"><img width="20" height="19" src="assets/img/icons/phone.webp" alt=""></span>
+                            <span class="header-top-info__text">0416 189 4706</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="header-top-info text-center">
+                            <span class="header-top-info__image pr-1"><img width="19" height="19" src="assets/img/icons/clock.webp" alt=""></span>
+                            <span class="header-top-info__text">9.00 am - 2.00 pm</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="header-top-info text-end">
+                            <a 
+                                class="header-top-info__link" 
+                                href="#"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#login">
+                                <span><i class="fa fa-user-o"></i> Condominio en Línea</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- menu bar -->
+        <div class="menu-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12  position-relative">
+                        <div class="menu-bar-wrapper background-color--default space__inner--x35">
+                            <div class="menu-bar-wrapper-inner">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-2">
+                                        <div class="brand-logo">
+                                            <a href="index.html">
+                                                <img width="142" height="31" src="assets/img/logo.png" class="img-fluid" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <div class="navigation-area d-flex justify-content-end align-items-center">
+                                            <!-- navigation menu -->
+                                            <nav class="main-nav-menu">
+                                                <ul class="d-flex justify-content-end">
+                                                    <li><a href="#">Inicio</a></li>
+                                                    <li><a href="#empresa">Nuestra Empresa</a></li>
+                                                    <li><a href="#servicios">Servicios</a></li>
+                                                    <li><a href="#contacto">Contáctenos</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of header area  ====================-->
+    <!--====================  mobile header ====================-->
+    <div class="mobile-header header-sticky bg-img space__inner--y30 background-repeat--x background-color--dark d-block d-lg-none" data-bg="">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6">
+                    <div class="brand-logo">
+                        <a href="index.html">
+                            <img width="142" height="31" src="assets/img/logo-white.png" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mobile-menu-trigger-wrapper text-end" id="mobile-menu-trigger">
+                        <span class="mobile-menu-trigger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of mobile header  ====================-->
+    <!--====================  offcanvas mobile menu ====================-->
+    <div class="offcanvas-mobile-menu" id="mobile-menu-overlay">
+        <a href="javascript:void(0)" class="offcanvas-menu-close" id="mobile-menu-close-trigger">
+            <span class="menu-close"></span>
+        </a>
+        <div class="offcanvas-wrapper">
+            <div class="offcanvas-inner-content">
+                <div class="offcanvas-mobile-search-area">
+                    <form action="#">
+                        <input type="search" placeholder="Search ...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="offcanvas-navigation">
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#empresa">Nuestra Empresa</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#contacto">Contáctenos</a></li>
+                    </ul>
+                </nav>
+                <div class="offcanvas-widget-area">
+                    <div class="off-canvas-contact-widget">
+                        <div class="header-contact-info">
+                            <ul class="header-contact-info__list">
+                                <li><i class="fa fa-phone"></i> 0416 189 4706</li>
+                                <li><i class="fa fa-clock-o"></i> 9.00 am - 2.00 pm</li>
+                                <li><i class="fa fa-user"></i> <a href="#">Condominio en línea</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Off Canvas Widget Social Start-->
+                    <div class="off-canvas-widget-social">
+                        <a href="#" title="Facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+                        <a href="#" title="Youtube"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
+                    </div>
+                    <!--Off Canvas Widget Social End-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of offcanvas mobile menu  ====================-->
+    <!--==================== LOGIN ================================-->
+    <!-- Vertically centered modal -->
+    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            
+                <form id="form-login" action="login.php">
+                    <div class="login-form">
+                        <h4 class="login-title">Condominio en línea</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12 space__bottom--20">
+                                <label>Código de usuario*</label>
+                                <input 
+                                    class="mb-0"
+                                    maxlength="9"
+                                    minlength="4"
+                                    name="usuario"
+                                    pattern="[0-9]{4,9}"
+                                    placeholder="Código de Usuario" 
+                                    required
+                                    type="text" 
+                                    />
+                            </div>
+                            <div class="col-12 space__bottom--20">
+                                <label>Password</label>
+                                <input 
+                                    class="mb-0" 
+                                    maxlength="8"
+                                    minlength="4"
+                                    name="password"
+                                    pattern="[0-9a-zA-Z]{4,8}"
+                                    placeholder="Password" 
+                                    required
+                                    type="password" 
+                                />
+                                <small>(Escriba número y letras, entre 4 y 8 dígitos)</small>
+                            </div>
+                            <!--div class="col-md-4">
+                                <div class="check-box d-inline-block ml-0 ml-md-2 space__top--10">
+                                    otro item       
+                                </div>
+                            </div>
+                            <div-- class="col-md-8 space__top--10 space__bottom--20 text-end text-md-end">
+                                <a href="#" class="forgot_pass">¿Olvidó su password?</a>
+                            </div-->
+                            <div class="col-md-4">
+                                
+                                <button class="default-btn-outline mt-0" id="btn-demo" type="submit">Demo</button>
+                                
+                            </div>
+                            <div class="col-md-8 text-end">
+                                
+                                <button type="button" class="secondary-btn mt-0" data-bs-dismiss="modal">Cerrar</button>
+                                <button class="default-btn mt-0" type="submit">Ingresar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+          </div>
+        </div>
+      </div>
+    <!-- <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form action="#">
+                <div class="login-form">
+                    <h4 class="login-title">Condominio en línea</h4>
+                    <div class="row">
+                        <div class="col-md-12 col-12 space__bottom--20">
+                            <label>Correo electrónico*</label>
+                            <input class="mb-0" type="email" placeholder="Corre Electrónico">
+                        </div>
+                        <div class="col-12 space__bottom--20">
+                            <label>Password</label>
+                            <input class="mb-0" type="password" placeholder="Password">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="check-box d-inline-block ml-0 ml-md-2 space__top--10">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4 space__top--10 space__bottom--20 text-end text-md-end">
+                            <a href="#" class="forgot_pass">¿Olvidó su password?</a>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="default-btn mt-0">Ingresar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div> -->
+    <!--==================== End LOGIN ============================-->
+    <!--====================  hero slider area ====================-->
+    <div class="hero-area space__bottom--r120">
+        <div class="hero-area-wrapper">
+            <div class="single-hero-slider single-hero-slider--background position-relative bg-img" data-bg="assets/img/hero-slider/home2-slider1-image2.jpg">
+                <!-- hero slider content -->
+                <div class="single-hero-slider__abs-img">
+                    <img width="977" height="839" src="assets/img/hero-slider/home2-slider1.png" class="img-fluid" alt="">
+                    <img width="978" height="849" src="assets/img/hero-slider/home2-slider2.png" class="img-fluid" alt="">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="hero-slider-content hero-slider-content--extra-space">
+                                <h3 class="hero-slider-content__subtitle hero-slider-content__subtitle hero-slider-content__subtitle--dark">
+                                    Administradora Anelu</h3>
+                                <h2 class="hero-slider-content__title hero-slider-content__title--dark space__bottom--50">
+                                    Cuidamos el valor <br />de tu propiedad</h2>
+                                <h3 class="hero-slider-content__subtitle hero-slider-content__subtitle hero-slider-content__subtitle--dark">
+                                <a href="#" class="default-btn default-btn--hero-slider space__bottom--50" data-bs-toggle="modal" data-bs-target="#login">Registrar pago condominio</a>
+                                <h3 class="hero-slider-content__subtitle hero-slider-content__subtitle hero-slider-content__subtitle--dark">
+                                    Encuéntranos en el Centro Comercial Daymar</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of hero slider area  ====================-->
+    <!--====================  empresa area ====================-->
+    <div class="about-area space__bottom--r120" id="empresa">
+        <div class="container">
+            <div class="row align-items-center row-25">
+                <div class="col-md-6">
+                    <div class="about-image space__bottom__lm--30">
+                        <img width="521" height="498" src="assets/img/about/about-section-3.jpg" class="img-fluid" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-content">
+                        <!-- section title -->
+                        <!--div class="section-title space__bottom--25">
+                            <h3 class="section-title__sub">Desde Agosto 2009</h3>
+                            <h2 class="section-title__title">Provide the best quality service and construction</h2>
+                        </div-->
+                        <p class="about-content__text space__bottom--40">
+                            Inscrita por ante la oficina de Registro Mercantil Primero de la Circunscripción Judicial
+                            del Distrito Capital y Estado Miranda, bajo el Número 8, Tomo 173-A, de fecha 19 de 
+                            Agosto de 2.009, identificada con el Expediente Número 220-4531, Servicio Nacional Integrado
+                            de Administración Aduanera y Tributaria SENIAT, bajo el RIF J-29804251-6, I.V.S.S., bajo
+                            el número patronal O41088713, I.N.C.E.S, bajo el Nº de aporte 34000-4, Ministerio del Poder 
+                            Público para el Trabajo y la Seguridad Social bajo el N.I.L Nº 1010097295.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="feature-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6 space__bottom__md--40 space__bottom__lm--40">
+                    <!-- feature content image -->
+                    <div class="feature-content-image">
+                        <img width="338" height="367" src="assets/img/feature/feature-banner-3.png" class="img-fluid" alt="">
+                        <img width="301" height="372" src="assets/img/feature/feature-banner-2.png" class="img-fluid" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-5 offset-xl-1">
+                    <!-- feature content wrapper -->
+                    <div class="feature-content-wrapper space__bottom--m40">
+                        <div class="single-feature space__bottom--40">
+                            <div class="single-feature__icon">
+                                <img width="53" height="53" src="assets/img/icons/feature-1.webp" class="img-fluid" alt="">
+                            </div>
+                            <div class="single-feature__content">
+                                <h4 class="single-feature__title">Bien Valorados</h4>
+                                <p class="single-feature__text">El común denominador en la opinión de nuestros clientes es que ofrecemos un servicio de calidad
+                                    ajustado a la realidad y que cubre sus expectativas.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="single-feature space__bottom--40">
+                            <div class="single-feature__icon">
+                                <img width="53" height="53" src="assets/img/icons/feature-2.webp" class="img-fluid" alt="">
+                            </div>
+                            <div class="single-feature__content">
+                                <h4 class="single-feature__title">Eficiencia</h4>
+                                <p class="single-feature__text">Logramos cumplir con los objetivos trazados por la Junta de Condominio, haciendo el mejor uso de 
+                                    los recursos disponibles.</p>
+                            </div>
+                        </div>
+                        <div class="single-feature space__bottom--40">
+                            <div class="single-feature__icon">
+                                <img width="53" height="53" src="assets/img/icons/feature-3.webp" class="img-fluid" alt="">
+                            </div>
+                            <div class="single-feature__content">
+                                <h4 class="single-feature__title">Costos Accesibles</h4>
+                                <p class="single-feature__text">Ofrecemos paquetes de servicios ajustados a su presupuesto. 
+                                    Ofrecemos un servicio de calidad al alcance de usted.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of feature area  ====================-->
+    <!--====================  about area ====================-->
+    <div class="about-area space__bottom--r120">
+        <div class="container">
+            <div class="row align-items-center row-25">
+                <div class="col-md-6 order-2 order-md-1">
+                    <div class="about-content">
+                        <!-- section title -->
+                        <div class="section-title space__bottom--25">
+                            <h3 class="section-title__sub">Desde 2009</h3>
+                            <h2 class="section-title__title">Le ofrecemos el mejor servicio de Administración de condominios</h2>
+                        </div>
+                        <p class="about-content__text space__bottom--40">
+                            Ponemos a su orden nuestra amplia experiencia en lo relacionado con la administración de condominios,
+                            nos apoyamos en equipos y sistemas computacionales de última generación. Siempre invirtiendo para 
+                            ofrecerle el servicio que usted merece.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 order-1 order-md-2">
+                    <div class="about-image space__bottom__lm--30">
+                        <img width="671" height="408" src="assets/img/about/about-section-2.jpg" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of about area  ====================-->
+    <div class="newsletter-area newsletter-area-bg bg-img space__bottom--r120" data-bg="assets/img/backgrounds/funfact-bg.jpg" style="background-image: url(&quot;assets/img/backgrounds/funfact-bg.jpg&quot;);">
+        <div class="newsletter-wrapper background-color--default-overlay space__inner--y60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-xl-10 mx-auto">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 mb-3 mb-lg-0">
+                                <!-- newsletter title -->
+                                <h3 class="newsletter-title"><span>Tecnología</span> de punta</h3>
+                            </div>
+                            <div class="col-lg-8">
+                                <p><span>Administradora Anelu C.A.</span> cuenta con uno de los sistemas más avanzados en Venezuela,
+                                    ofrecemos una conciliación y depuración segura y a tiempo.<br>
+                                    El aviso de cobro es expresado en Bolívares con su equivalente en Dólares, calculados
+                                    a la tasa del día de la página del Banco Central de Venezuela, la cual cambia diariamente
+                                    en la página de La Administradora.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  service area ====================-->
+    <div class="service-section space__bottom--r120" id="servicios">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="service-item-wrapper space__bottom--m40">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="javascript:void(0)">
+                                                <img width="370" height="247" width="370" height="247" src="assets/img/service/service-1-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-030-management"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="javascript:void(0)">Administración de Condominios</a>
+                                        </h3>
+                                        <ul class="">
+                                           <li><i class="fa fa-check"></i> Elaboración y envío de recibos vía correo electrónico.</li> 
+                                           <li><i class="fa fa-check"></i> Jornada especial puerta a puerta, solo  transferencias.</li>
+                                           <li><i class="fa fa-check"></i> Asistencia y asesoramiento a la asamblea general anual.</li>
+                                           <li><i class="fa fa-check"></i> Custodia de instrumentos de pago usados por la J.C.</li>
+                                           <li><i class="fa fa-check"></i> Servicio de condominio en línea.</li>
+                                           <li><i class="fa fa-check"></i> Servicio de cobranzas.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="javascript:void(0)">
+                                                <img width="370" height="246" src="assets/img/service/service-2-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-032-gears-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="javascript:void(0)">Servicios Adicionales</a>
+                                        </h3>
+                                        <ul class="">
+                                            <li><i class="fa fa-check"></i> Registros subalternos, Entidades bancarias, etc.</li> 
+                                            <li><i class="fa fa-check"></i> Pago servicios públicos (CANTV, CORPOELEC, etc.)</li>
+                                            <li><i class="fa fa-check"></i> Elaboración nómina y recibos  de pago.</li>
+                                            <li><i class="fa fa-check"></i> Gestión de trabajadores antes los entes públicos BANHAVIH, IVSS, RNTE, otro.</li>
+                                            <li><i class="fa fa-check"></i> Financiamiento de emergencias en áreas comunes.</li>
+                                            <li><i class="fa fa-check"></i> Operativos de cobranza puerta a puerta.</li>
+                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="javascript:void(0)">
+                                                <img width="370" height="247" src="assets/img/service/service-3-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-050-boxes"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="javascript:void(0)">Departamento Legal</a>
+                                        </h3>
+                                        <p class="subtitle">
+                                            Ofrecemos servicio de cobranza extrajudicial, asesoría para la firma de convenios de pagos. Asesoría
+                                            a la Junta de Condominio por razones del cargo que ejerzan y/o incumplimiento de sus obligaciones en
+                                            representación de la comunidad, sean citados a cualquier organismo del estado.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="javascript:void(0)">
+                                                <img width="370" height="246" src="assets/img/service/service-4-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-042-monitor"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="javascript:void(0)">Condominio en Línea</a>
+                                        </h3>
+                                        <p class="subtitle">
+                                            Le ofrecemos un canal para la gestión de su cuenta de condominio, disponible las 24 horas del día, todos los días del año.
+                                            Usted podrá hacer consultas y algunas operaciones sobre su cuenta de condominio, de forma rápida y sencilla.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="javascript:void(0)">
+                                                <img width="370" height="246" src="assets/img/service/service-5-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-003-waste"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="javascript:void(0)">COBRANZA EFICAZ, EFECTIVA Y TRANSPARENTE</a>
+                                        </h3>
+                                        <p class="subtitle">
+                                            Descarga de pagos de inmediato. Respuesta personalizada e inmediata. Nuestro Departamento
+                                            Legal cuenta con profesionales especialistas en el área condominial.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="service-details.html">
+                                                <img width="370" height="247" src="assets/img/service/service-5-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-048-chemical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Laminate Flooring</a>
+                                        </h3>
+                                        <p class="subtitle">
+                                            Lorem ipsum dolor sit amet consect adipisi elit sed do eiusm
+                                            tempor
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 space__bottom--40">
+                                <div class="service-grid-item">
+                                    <div class="service-grid-item__image">
+                                        <div class="service-grid-item__image-wrapper">
+                                            <a href="service-details.html">
+                                                <img width="370" height="247" src="assets/img/service/service-6-m.webp" class="img-fluid" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="flaticon-037-forklift"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-grid-item__content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Project Planning</a>
+                                        </h3>
+                                        <p class="subtitle">
+                                            Lorem ipsum dolor sit amet consect adipisi elit sed do eiusm
+                                            tempor
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="space__inner__top--50 testimonial__text space__bottom--40">
+                <span class="quote-left">"</span>
+                La administradora Anelu los invita a mantener tu condominio al día, 
+                y que los cargos reflejados en tu recibo no son gastos, es una inversión que 
+                revaloriza tu vivienda
+                <span class="quote-left">"</span>
+            </h3>
+            <div class="single-testimonial__rating space__bottom--10 text-center">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of service area  ====================-->
+    <!--====================  cta area ====================-->
+    <div class="cta-area cta-area-bg bg-img" data-bg="assets/img/backgrounds/cta-bg2.jpg">
+        <div class="cta-wrapper background-color--dark-overlay space__inner__top--50 space__inner__bottom--150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 mx-auto">
+                        <div class="cta-block cta-block--default-color">
+                            <p class="cta-block__light-text text-center">Más de <span>10</span> años de Experiencia</p>
+                            <p class="cta-block__semi-bold-text cta-block__semi-bold-text--medium text-center">
+                                ¿Buscas administradora? Llámanos </p>
+                            <p class="cta-block__bold-text text-center">(0416) 189 4706</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of cta area  ====================-->
+    <!-- funfact include -->
+    <div class="funfact-wrapper space__top--m100">
+        <!--====================  fun fact area ====================-->
+        <div class="fun-fact-area space__bottom--r120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- fun fact wrapper -->
+                        <div class="fun-fact-wrapper fun-fact-wrapper-bg bg-img" data-bg="assets/img/backgrounds/funfact-bg.jpg">
+                            <div class="fun-fact-inner background-color--default-overlay background-repeat--x-bottom space__inner--y30 bg-img" data-bg="assets/img/icons/ruler-black.webp">
+                                <div class="fun-fact-content-wrapper">
+                                    <div class="single-fun-fact">
+                                        <h3 class="single-fun-fact__number counter">2009</h3>
+                                        <h4 class="single-fun-fact__text">Desde</h4>
+                                    </div>
+                                    <div class="single-fun-fact">
+                                        <h3 class="single-fun-fact__number counter">16</h3>
+                                        <h4 class="single-fun-fact__text">Clientes</h4>
+                                    </div>
+                                    <div class="single-fun-fact">
+                                        <h3 class="single-fun-fact__number counter">30000</h3>
+                                        <h4 class="single-fun-fact__text">Propietarios</h4>
+                                    </div>
+                                    <div class="single-fun-fact">
+                                        <h3 class="single-fun-fact__number counter">100</h3>
+                                        <h4 class="single-fun-fact__text">% Confianza</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====================  End of fun fact area  ====================-->
+    </div>
+    <!--====================  project area ====================-->
+    <div class="project-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- section title -->
+                    <div class="section-title text-center  space__bottom--40 mx-auto">
+                        <h3 class="section-title__sub">Confianza</h3>
+                        <h2 class="section-title__title">Algunos de nuestros clientes</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="project-wrapper project-wrapper--masonry row space__bottom--m30">
+                <div class="col-1 gutter"></div>
+                <div class="col-lg-4 col-md-6 grid-item space__bottom--30">
+                    <div class="single-project-wrapper single-project-wrapper--reduced-abs">
+                        <a class="single-project-item p-0" href="project-details.html">
+                            <img width="370" height="600" src="assets/img/projects/project9.png" class="img-fluid" alt="">
+                            <span class="single-project-title">Guatire Plaza</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 grid-item space__bottom--30">
+                    <div class="single-project-wrapper single-project-wrapper--reduced-abs">
+                        <a class="single-project-item p-0" href="project-details.html">
+                            <img width="470" height="285" src="assets/img/projects/project10.png" class="img-fluid" alt="">
+                            <span class="single-project-title">Terrazas de San Pedro</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 grid-item space__bottom--30">
+                    <div class="single-project-wrapper single-project-wrapper--reduced-abs">
+                        <a class="single-project-item p-0" href="project-details.html">
+                            <img width="270" height="285" src="assets/img/projects/project11.png" class="img-fluid" alt="">
+                            <span class="single-project-title">Escondido</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-5 grid-item space__bottom--30">
+                    <div class="single-project-wrapper single-project-wrapper--reduced-abs">
+                        <a class="single-project-item p-0" href="project-details.html">
+                            <img width="270" height="285" src="assets/img/projects/project12.png" class="img-fluid" alt="">
+                            <span class="single-project-title">Conj. Resd. Los Jardines</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-7 grid-item space__bottom--30">
+                    <div class="single-project-wrapper single-project-wrapper--reduced-abs">
+                        <a class="single-project-item p-0" href="project-details.html">
+                            <img width="470" height="285" src="assets/img/projects/project13.png" class="img-fluid" alt="">
+                            <span class="single-project-title">Conj. Resd. Los Jardines</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of project area  ====================-->
+    <!--====================  contacto area ====================-->
+    <div class="conact-section space__bottom--r120" id="contacto">
+        <div class="container">
+            <div class="row">
+                <div class="col space__bottom--40">
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1650.3958292804625!2d-66.53508154757542!3d10.466249943737377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2baa2d62bce697%3A0xc6ce8bcab18f3186!2sCentro%20Comercial%20Daymar!5e0!3m2!1ses-419!2ses!4v1635598992037!5m2!1ses-419!2ses" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-12">
+                    <div class="contact-information">
+                        <h4 class="space__bottom--30">Información de Contacto</h4>
+                        <ul>
+                            <li>
+                                <span class="icon"><i class="fa fa-map-marker"></i></span>
+                                <span class="text"><span>Carretera Principal Araira, C.C. Daymar, Local P2-11. Guatire, Municipio Zamora.</span></span>
+                            </li>
+                            <li>
+                                <span class="icon"><i class="fa fa-phone"></i></span>
+                                <span class="text">
+                                    <a href="tel:04161894706">(0416 189 4706)</a>
+                            </span>
+                            </li>
+                            <li>
+                                <span class="icon"><i class="fa fa-envelope-open"></i></span>
+                                <span class="text">
+                                    <a href="mailto:adm.aneluca@gmail.com">adm.aneluca@gmail.com</a>
+                                    <a href="javascript:void(0)">www.administradoranelu.com</a>
+                            </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-12">
+                    <div class="contact-form">
+                        <h4 class="space__bottom--30">Déjanos un mensaje</h4>
+                        <form id="contact-form" action="assets/php/mail.php" method="post">
+                            <div class="row row-10">
+                                <div class="col-md-6 col-12 space__bottom--20"><input name="con_name" type="text" placeholder="Su Nombre"></div>
+                                <div class="col-md-6 col-12 space__bottom--20"><input name="con_email" type="email" placeholder="Su Email"></div>
+                                <div class="col-12"><textarea name="con_message" placeholder="Escriba su Mensaje"></textarea></div>
+                                <div class="col-12"><button>Enviar mensaje</button></div>
+                            </div>
+                        </form>
+                        <p class="form-message"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of contacto area  ====================-->
+    <!--====================  brand logo area ====================-->
+    <!--
+    <div class="brand-logo-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="brand-logo-wrapper">
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="126" height="50" src="assets/img/brand-logo/logo1.webp" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="129" height="49" src="assets/img/brand-logo/logo2.webp" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="113" height="49" src="assets/img/brand-logo/logo3.webp" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="141" height="55" src="assets/img/brand-logo/logo4.webp" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="146" height="54" src="assets/img/brand-logo/logo5.webp" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="single-brand-logo">
+                            <a href="#"><img width="141" height="55" src="assets/img/brand-logo/logo4.webp" class="img-fluid" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    <!--====================  End of brand logo area  ====================-->
+    <!--====================  footer area ====================-->
+    <div class="footer-area bg-img space__inner--ry120" data-bg="assets/img/backgrounds/footer-bg.webp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <div class="footer-widget__logo space__bottom--40">
+                            <a href="index.html">
+                                <img width="142" height="31" src="assets/img/logo-white.png" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                        <p class="footer-widget__text space__bottom--20">Información oportuna en el momento que la solicite.
+                            Canales de comunicación disponibles las 24 horas del día, los 365 días del año.
+                        </p>
+                        <ul class="social-icons">
+                            <li><a href="//www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="//www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="//www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="//plus.google.com"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget space__top--15 space__top__md--40 space__top__lm--40">
+                        <h5 class="footer-widget__title space__bottom--20">Información</h5>
+                        <ul class="footer-widget__menu">
+                            <li><a href="#">Inicio</a></li>
+                            <li><a href="#empresa">Empresa</a></li>
+                            <li><a href="#servicios">Servicios</a></li>
+                            <li><a href="#contacto">Contacto</a></li>
+                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#login">Condominio en línea</a></li> 
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6">
+                    <h5 class="footer-widget__title space__top--15 space__bottom--20 space__top__md--40 space__top__lm--40">
+                        Contáctanos</h5>
+                    <div class="footer-contact-wrapper">
+                        <div class="single-footer-contact">
+                            <div class="single-footer-contact__icon"><i class="fa fa-map-marker"></i></div>
+                            <div class="single-footer-contact__text">Carretera Principal Araira, C.C. Daymar, Local P2-11
+                                Guatire, Municipio Zamora. Venezuela.</div>
+                        </div>
+                        <div class="single-footer-contact">
+                            <div class="single-footer-contact__icon"><i class="fa fa-phone"></i></div>
+                            <div class="single-footer-contact__text"> 
+                                <a href="tel:04161894706">0416 189 4706</a> 
+                            </div>
+                        </div>
+                        <div class="single-footer-contact">
+                            <div class="single-footer-contact__icon"><i class="fa fa-envelope-open"></i></div>
+                            <div class="single-footer-contact__text"><a href="mailto:adm.aneluca@gmail.com">adm.aneluca@gmail.com</a>
+                                <br> <a href="javascript:void(0)">www.administradoranelu.com</a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- copyright text -->
+    <div class="copyright-area background-color--deep-dark space__inner--y30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="copyright-text">&copy; Administradora Anelu 2021. Hecho con <i class="fa fa-heart"></i> por <a href="https://www.pronet21.com.ve" target="_blank">Pronet21</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of footer area  ====================-->
+    <!--====================  scroll top ====================-->
+    <button class="scroll-top" id="scroll-top">
+        <i class="fa fa-angle-up"></i>
+    </button>
+    <!--====================  End of scroll top  ====================-->
+    <!-- JS
+    ============================================ -->
+    <!-- Modernizer JS -->
+    <script src="assets/js/modernizr-2.8.3.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="assets/js/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="assets/js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Slick slider JS -->
+    <script src="assets/js/plugins/slick.min.js"></script>
+    <!-- Counterup JS -->
+    <script src="assets/js/plugins/counterup.min.js"></script>
+    <!-- Waypoint JS -->
+    <script src="assets/js/plugins/waypoint.min.js"></script>
+    <!-- Justified Gallery JS -->
+    <script src="assets/js/plugins/justifiedGallery.min.js"></script>
+    <!-- Image Loaded JS -->
+    <script src="assets/js/plugins/imageloaded.min.js"></script>
+    <!-- Maosnry JS -->
+    <script src="assets/js/plugins/masonry.min.js"></script>
+    <!-- Light Gallery JS -->
+    <script src="assets/js/plugins/light-gallery.min.js"></script>
+    <!-- Mailchimp JS -->
+    <script src="assets/js/plugins/mailchimp-ajax-submit.min.js"></script>
+    <!-- Plugins JS (Please remove the comment from below plugins.min.js for better website load performance and remove plugin js files from avobe) -->
+    <!--
+    <script src="assets/js/plugins/plugins.min.js"></script>
+    -->
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+    <script src="assets/js/demo.js"></script>
+    <script>
+    
+    const form = document.getElementById('form-login'); 
+    const btnDemo = document.getElementById('btn-demo');
+    
+    sendLogin = async () => {
+
+        const formData = $(form).serialize();
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $(form).attr('action'),
+            data: formData,
+        })
+        .done(function(response) {
+            
+            const title = response.suceed ? '¡Buen trabajo!' : '¡Ooops!';
+            const icon  = response.suceed ? 'success' : 'error';
+            const timer = response.suceed ? 2000: 0;
+            const btn   = !response.suceed;
+
+            Swal.fire({
+                title,
+                text: response.mensaje,
+                icon,
+                timer: timer,
+                showConfirmButton: btn
+            })
+            .then(() => {
+                if(response.suceed) window.location.href= 'enlinea';
+                
+            });
+        })
+        .fail(function(response) {
+            
+            Swal.fire({
+                footer: '<code>Si el error persiste, escríbanos a adm.aneluca@gmail.com</code>',
+                icon: 'error',
+                text: 'Ha ocurrido un error interno mientras intentamos procesar su operación.',
+                title: 'Ooops!'
+            })
+        });
+    }
+
+    form.addEventListener('submit', (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+        this.sendLogin();
+
+    });
+
+    btnDemo.addEventListener('click', (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+        form['usuario'].value = userDemo.usuario;
+        form['password'].value = userDemo.password;
+        this.sendLogin();
+
+    });
+    
+    </script>
+</body>
+</html>

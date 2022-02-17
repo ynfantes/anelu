@@ -1,0 +1,97 @@
+<div class="p-3">
+    <h2 class="mb-0 fs-xl">
+        Sus datos de contacto
+    </h2>
+</div>
+<div class="card-body">
+    
+    <form class="needs-validation" novalidate action="{{constant('URL_SISTEMA')}}propietario/modificar/perfil">
+        <input type="hidden" name="modificado" value="1" />
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="validationTooltip01">Teléfono Móvil <span class="text-danger">*</span> <span class="help-block">(solo números)</span></label>
+                <input 
+                    class= "form-control" 
+                    data-type="phone"
+                    maxlength="11" 
+                    minlength="11" 
+                    name= "telefono3"
+                    pattern="[0-9]{11}"
+                    required 
+                    type= "tel" 
+                    value="{{propietario.telefono3}}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationTooltip02">Teléfono Contacto 1 <span class="help-block">(solo números)</span></label>
+                <input
+                    class="form-control" 
+                    data-type="phone"  
+                    maxlength="11"
+                    minlength="11" 
+                    name= "telefono2"
+                    type="tel" 
+                    value="{{propietario.telefono2}}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationTooltip02">Teléfono Contacto 2 <span class="help-block">(solo números)</span></label>
+                <input
+                    class="form-control" 
+                    data-type="phone"
+                    maxlength="11"
+                    maxlength="11" 
+                    minlength="11" 
+                    name= "telefono1" 
+                    type="tel" 
+                    value="{{propietario.telefono1}}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationTooltip03">Correo Electrónico Principal <span class="text-danger">*</span></label>
+                <input 
+                    class="form-control" 
+                    email 
+                    maxlength="63"
+                    name="email"
+                    required 
+                    type="email"
+                    value="{{propietario.email}}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationTooltip04">Correo Electrónico Alternativo</label>
+                <input 
+                    class="form-control" 
+                    email
+                    maxlength="63"
+                    name="email_alternativo"
+                    type="email"
+                    value="{{propietario.email_alternativo}}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 mb-3">
+                <label>Dirección Correspondencia</label>
+                <textarea 
+                    class="form-control" 
+                    minlength="10"
+                    maxlength="150" 
+                    name="direccion"
+                >{{propietario.direccion}}</textarea>
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" {% if propietario.cedula == 99999999 %} disabled {% endif %} >Actualizar Datos</button>
+    </form>
+
+</div>

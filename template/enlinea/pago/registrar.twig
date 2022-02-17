@@ -1,0 +1,278 @@
+{% extends 'layout/app.base.twig' %}
+{% block contenido %}
+<div class="alert alert-warning alert-dismissible fade show">
+    <div class="d-flex flex-start w-100">
+        <div class="mr-2 hidden-md-down">
+            <span class="icon-stack icon-stack-lg">
+                <i class="base base-9 icon-stack-3x opacity-100 color-warning-500"></i>
+                <i class="base base-2 icon-stack-2x opacity-100 color-warning-800"></i>
+                <i class="ni ni-shield icon-stack-1x opacity-100 color-white"></i>
+            </span>
+        </div>
+        <div class="d-flex flex-fill">
+            <div class="flex-fill">
+                <span class="h3">Declaración Jurada</span>
+                <p>Yo <strong>{{spaceIzq(session.usuario.nombre)}}</strong>, declaro que estoy ingresando datos reales, fidedignos y legales de la transferencia o depósito,
+                de ser rechazados los mismos por el banco emisor o receptor, será  cargado dicho valor en mi cuenta de gastos de condominio,
+                sin aviso ni protesta.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+<div class="col-12">
+	<div class="card mb-g rounded-top">
+		<div class="card-body">
+		<form class="needs-validation" novalidate action="{{constant('URL_SISTEMA')}}/pago/guardar">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tab_direction-1" role="tab" aria-selected="true">
+                    <span class="badge bg-primary-500 ml-2">1</span> Selección de Facturas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" data-toggle="tab" href="#tab_direction-2" role="tab" aria-selected="false">
+                    <span class="badge bg-primary-500 ml-2">2</span> Información del pago</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" data-toggle="tab" href="#tab_direction-3" role="tab" aria-selected="false">
+                    <span class="badge bg-primary-500 ml-2">3</span> Resultado</a>
+                </li>
+            </ul>
+            
+            <div class="tab-content p-3">
+                <div class="tab-pane fade active show" id="tab_direction-1" role="tabpanel">
+                <h3 class="mb-3"><a href='javascript:void(0)'><strong>Paso 1</strong> - Selección de facturas a pagar</a></h3>
+                    {{ include("misc/pago/recibos-pendientes.twig") }}
+                    {{ include("misc/pago/button.twig", { index: '1', next: 'tab_direction-2' }) }}
+                    
+                </div>
+                <div class="tab-pane fade" id="tab_direction-2" role="tabpanel">
+                    <h3 class="mb-3"><a href='javascript:void(0)'><strong>Paso 2</strong> - Información del depósito o transferencia</a></h3>
+                    {{ include('misc/pago/informacion-pago.twig') }}
+                    {{ include("misc/pago/button.twig", { index: '2', back : 'tab_direction-1', next: 'tab_direction-3' }) }}
+                </div>
+                <div class="tab-pane fade" id="tab_direction-3" role="tabpanel">
+                    <div class="text-center p-6">
+                        <h2>
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <span>Estamos procesando su operacion</span>
+                        </h2>
+                        <h4>Esto debe tardar unos segundos...</h4>
+                    </div>
+                </div>
+
+            </div>
+            
+        </form>
+		</div>
+	</div>
+</div>
+
+</div>
+{% endblock %}
+{% block js %}
+{{parent()}}
+<!--script src="{{constant('ROOT')}}assets/js/submit.js"></script-->
+<script src="{{constant('ROOT')}}assets/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+<script>
+
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+
+        const form = document.querySelector('.needs-validation');
+        form.addEventListener('validate', (e) => {
+            
+            e.preventDefault();
+            event.stopPropagation();
+			form.classList.add('was-validated');
+
+        });
+        // seleccionamos los checkboxs
+        const checks = document.querySelectorAll('input[type="checkbox"]');
+        Array.prototype.map.call(checks, (check) => check.addEventListener('click', sumPayment) );
+
+        // seleccionamos todos los botones que mueven adelante y atrás
+        const buttons = document.getElementsByClassName('btn-move');
+        
+        Array.prototype.filter.call( buttons, function(btn){
+            // escuchamos el evento click de los botones
+            btn.addEventListener('click', function(event) {
+                if( btn.attributes['disabled']) return false;
+                const to = event.srcElement.attributes['data-to'].value;
+                // seleccionamos los elementos tabs
+                const tabs = document.querySelectorAll('a[role="tab"]');
+                
+                Array.prototype.filter.call( tabs, function(tab, index) {
+                    
+                        if( tab.classList.contains('active') ) tab.classList.add('disabled');
+                        
+                        if( tab.attributes['href'].value === '#' + to ) {
+
+                            // aplicamos la validación correspondiente a cada tab
+                            if (isValidTab(index)) {
+
+                                tab.classList.remove('disabled'); 
+                                tab.click();
+
+                            } else {
+
+                                tabs[index - 1].classList.remove('disabled');
+                                
+                            }
+
+                        }
+
+                });
+
+            }, false);
+
+        } )
+    
+    }, false);
+})();
+
+function isValidTab(index) {
+    switch (index) {
+        case 1:
+            const inputs = document.querySelectorAll('input[name="id[]"]');
+            const checkeds = Array.prototype.filter.call(inputs,(input) => input.checked == true);
+            const valid = (checkeds.length > 0);
+            if (!valid) {
+
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Debe marcar por lo menos una factura a cancelar',
+                    title: 'Ooops!'
+                });
+
+            }
+            return valid;
+            break;
+
+        case 2:
+            const form = document.querySelector('.needs-validation');
+            return validatePayment(form);
+            break;
+
+        default: 
+            return true;
+    }
+}
+
+const messagePattern = {
+    'telefono': 'Escriba solo números',
+    'email': 'Escriba un email válido',
+    'numero_documento': 'Escriba solo números, entre 4 y 11 dígitos'
+}
+
+function validInput(input) {
+    const { value, name, tagName, type } = input;
+    
+    const error = $(`${tagName}[name="${name}"]`).next('.invalid-feedback');
+    const validityState = input.validity;
+    
+    let message = '';
+    
+    if( validityState.valueMissing ) {
+        message = 'Este campo es requerido';
+    } 
+    else if ( validityState.tooShort ) {
+        message = `Escríba mínimo ${input.minLength} dígitos`;
+    }
+    else if ( validityState.typeMismatch || validityState.patternMismatch ) {
+        message = messagePattern[input.name];
+    }
+    else if ( validityState.customError ) {
+        return false;
+    }
+
+    error.html(message);
+}
+
+function validatePayment(form) {
+    
+    form.classList.add('was-validated');
+    const isValid = form.checkValidity();
+
+    if (!isValid) {
+        
+        const elements = Array.from(form.elements);
+        const inputs   = elements.filter(ele => (ele.tagName === 'INPUT' || ele.tagName === 'SELECT'));
+        inputs.map( ( element ) => validInput( element ));
+
+    } else {
+        
+        savePayment(form);
+
+    }
+    return isValid;
+}
+
+function savePayment(form) {
+
+    const formData = $(form).serialize();
+    //const button = $('button[type="submit"]');
+    //const label_button = button.html();
+    //const label_loading = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Procesando...';
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $(form).attr('action'),
+        data: formData,
+    })
+    .done(function(response) {
+        
+        const title = response.suceed ? '¡Buen trabajo!' : '¡Ooops!';
+        const icon  = response.suceed ? 'success' : 'error';
+
+        Swal.fire(
+            title,
+            response.mensaje,
+            icon
+        )
+        .then(() => {
+            location.reload();
+        });
+    })
+    .fail(function(response) {
+        
+        Swal.fire({
+            footer: '<code>Si el error persiste, escríbanos a {{ " " }}{{constant('CORREO_CONTACTO')}}</code>',
+            icon: 'error',
+            text: 'Ha ocurrido un error interno mientras intentamos procesar su operación.',
+            title: 'Ooops!'
+        })
+        .then(() => {
+            location.reload();
+        });
+    });
+}
+
+function sumPayment() {
+    let monto = 0;
+    const montos = $("input[name|='montos[]']");
+    const input = Array.from(document.querySelectorAll("input:checked"));
+    
+    input.map(ele => {
+
+        const monto_factura = montos[ele.value].value;
+        monto = monto + parseFloat(monto_factura);
+
+    });
+    
+    $("#monto").val(monto.formatCurrency());
+    /*
+    $("input:checked").each(() => {
+
+        const  monto_factura = $("input[name|='montos[]']").eq($(this).val()).val();
+        monto = parseFloat(monto) + parseFloat(monto_factura);
+
+    });
+    $("#monto").val(monto.formatCurrency());
+    */
+}
+
+</script>
+{% endblock %}

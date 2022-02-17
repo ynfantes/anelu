@@ -1,0 +1,168 @@
+{% extends 'layout/app.base.twig'%}
+{% block contenido %}
+	
+	<div class="alert alert-info fade show" role="alert">
+	<div class="d-flex align-items-center">
+			<div class="alert-icon">
+				<i class="fal fa-info-circle"></i>
+			</div>
+			<div class="flex-1">
+				<span class="h4">Información Importante</span>
+				<br>
+				La información que ve en esta página está actualizada al <span class='fw-500 h2'>{{fecha_actualizacion}}</span>.
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="col-lg-6 sortable-grid ui-sortable">
+			<div id="panel-1" class="panel panel-1 panel-sortable" role="widget">
+				<div class="panel-hdr" role="heading">
+					<h2 class="ui-sortable-handle">Facturación <span class="fw-300">Mensual</span></h2>
+					<div class="panel-saving mr-2" style="display:none">
+						<i class="fal fa-spinner-third fa-spin-4x fs-xl"></i>
+					</div>
+					<div class="panel-toolbar" role="menu">
+						<a href="#" class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></a>
+						<a href="#" class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></a>
+					</div>
+				</div>
+				<div class="panel-container collapse show">
+					<div class="panel-content">
+						<div id="billing-chart" style="height:300px"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6 sortable-grid ui-sortable">
+			<div id="panel-2" class="panel panel-sortable" role="widget">
+				<div class="panel-hdr" role="heading">
+					<h2 class="ui-sortable-handle">Cobranza <span class="fw-300">Mensual</span></h2>
+					<div class="panel-saving mr-2" style="display:none">
+						<i class="fal fa-spinner-third fa-spin-4x fs-xl"></i>
+					</div>
+					<div class="panel-toolbar" role="menu">
+						<a href="#" class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></a>
+						<a href="#" class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></a>
+					</div>
+				</div>
+				<div class="panel-container collapse show" role="content">
+					<div class="loader">
+						<i class="fal fa-spinner-third fa-spin-4x fs-xxl"></i>
+					</div>
+					<div class="panel-content">
+						<div id="collection-chart" style="height:300px"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="alert alert-success fade show" role="alert">
+	<div class="d-flex align-items-center">
+			<div class="alert-icon">
+				<i class="fal fa-info-circle"></i>
+			</div>
+			<div class="flex-1">
+				<span class="h4">Soporte al propietario</span>
+				<br>
+				Escríbanos al <code><i class="fal fa-envelope"></i>&nbsp;{{constant('CORREO_CONTACTO')}}</code> si tiene algún inconveniente con esta página.
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+{{parent()}}
+<script src="{{constant('ROOT')}}assets/js/statistics/flot/flot.bundle.js"></script>
+<script>
+/* chart colors default */
+const $chrt_border_color = "#efefef";
+const $chrt_grid_color = "#DDD";
+const $chrt_main = "#E24913";		/* red       */
+const $chrt_second = "#6595b4";		/* blue      */
+const $chrt_third = "#FF9F01";		/* orange    */
+const $chrt_fourth = "#7e9d3a";		/* green     */
+const $chrt_fifth = "#BD362F";		/* dark red  */
+const $chrt_mono = "#000";
+
+{% set id = '' %}
+{% for inm in inmuebles %}
+	
+	{% if id != inm.id_inmueble %}
+	
+		{% set id = inm.id_inmueble %}
+		const url = "{{constant("URL_SISTEMA")}}/inmueble/facturacionflot/{{inm.id_inmueble}}";
+		let dataset1 = [];
+		let dataset = [];
+		
+		var options = {
+			xaxis : {
+				mode : "categories",
+				tickLength : 5,
+				tickFormatter: function(val, axis) {
+					const value = axis.ticks[val].label;
+					return value;
+				}
+			},
+			series : {
+				lines : {
+					show : true,
+					lineWidth : 1,
+					fill : true,
+					fillColor : {
+						colors : [
+							{ opacity : 0.1 }, 
+							{ opacity : 0.15}
+						]
+					}
+				},
+				points: { show: true },
+				shadowSize : 0
+			},
+			selection : { mode : "x" },
+			legend : { show : false },
+			grid : {
+				hoverable : true,
+				clickable : true,
+				tickColor : $chrt_border_color,
+				borderWidth : 0,
+				borderColor : $chrt_border_color
+			},
+			yaxis:{
+				tickFormatter: function(val, axis) {
+					return val.toLocaleString();
+				}
+			},
+			tooltip : true,
+			tooltipOpts : {
+				cssClass: 'tooltip-inner',
+				content : "%s <span class='text-success fw-500'>Bs.%y</span> en <span class='text-warning fw-500'>%x</span>",
+				//content: "Your sales for <span class='text-warning fw-500'>%x</span> was <span class='text-success fw-500'>$%y</span>",
+				dateFormat : "%y-%0m-%0d",
+				defaultTheme : false
+			},
+			colors : [$chrt_fourth,$chrt_main,$chrt_second],
+		};
+		$.ajax({
+			url: "{{constant("URL_SISTEMA")}}/inmueble/facturacionflot/{{inm.id_inmueble}}",
+			dataType:"json",
+			cache: true,
+			success: function(data1) {
+				dataset1.push(data1);
+				$.plot($("#billing-chart"), dataset1, options);
+			}
+		});
+		$.ajax({
+			url: "{{constant("URL_SISTEMA")}}/inmueble/cobranzaflot/{{inm.id_inmueble}}",
+			dataType:"json",
+			cache: true,
+			success: function(data) {
+				dataset.push(data);
+				$.plot($("#collection-chart"), dataset, options);
+			}
+		});
+	{% endif %}
+{% endfor %}
+
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+
+<div class="height-8 px-3 d-flex flex-row align-items-center flex-wrap flex-shrink-0 mt-10">                    
+    {% if back %}
+        <botton class="btn btn-primary btn-move" data-to='{{back}}'>Regresar</botton>
+    {% endif %}
+    <div class="ml-auto">
+        <botton 
+            class="btn btn-primary btn-move {% if index == 2 and usuario.cedula == 99999999 %} disabled {% endif %}" 
+            data-to='{{next}}' 
+            {% if index == 2 %} type='submit'{% endif %} 
+            {% if index == 2 and usuario.cedula == 99999999 %} disabled {% endif %}>Siguiente
+        </button>
+    </div>
+</div>

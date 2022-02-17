@@ -1,0 +1,169 @@
+{% extends 'layout/app.base.twig'%}
+{% block contenido %}
+	<div class='row'>
+		<div class='col-lg-4 col-xl-4 order-lg-1 order-xl-1'>
+			<div class="card mb-g rounded-top">
+				<div class="row no-gutters row-grid">
+					<div class="col-12">
+						<div class="d-flex flex-column align-items-center justify-content-center p-4">
+							<img src="{{constant('ROOT')}}assets/img/avatar/user_120x120.png" class="rounded-circle shadow-2 img-thumbnail" alt="">
+							<h5 class="mb-0 fw-700 text-center mt-3">
+								{{propietario.nombre}}
+								<small class="text-muted mb-0"><i class="fal fa-id-card-alt"></i> {{propietario.cedula}}</small><br/>
+								<small class="text-muted mb-0"><i class="fal fa-envelope"></i> {{propietario.email}}</small><br/>
+								<small class="text-muted mb-0"><i class="fal fa-mobile-android"></i> {{propietario.telefono1}}</small>
+							</h5>
+						</div>
+					</div>
+					
+					<div class="col-12">
+						<div class="p-3 text-center">
+							<a href="javascript:void(0);" class="btn-link font-weight-bold">Follow</a>
+							<span class="text-primary d-inline-block mx-3">●</span>
+							<a href="javascript:void(0);" class="btn-link font-weight-bold">Message</a>
+							<span class="text-primary d-inline-block mx-3">●</span>
+							<a href="javascript:void(0);" class="btn-link font-weight-bold">Connect</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-lg-8 col-xl-8 order-lg-2 order-xl-2'>
+			<div class="card mb-g rounded-top">
+				{% if accion == 'ver' %}
+
+					{% include 'misc/form-personal-data.twig' %}
+
+				{% elseif accion == 'cambiar-clave' %}
+
+					{% include 'misc/form-change-password.twig' %}
+
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+	{{parent()}}
+	<script src="{{constant('ROOT')}}assets/js/submit.js"></script>
+	<script src="{{constant('ROOT')}}assets/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+	<script>
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+		 
+        const forms = document.getElementsByClassName('needs-validation');
+
+		const elem = $('input[name="clave_confirm"]');		
+		if(elem.length > 0) {
+			elem[0].addEventListener('blur', verifyPassword);
+		}
+    
+        const validation = Array.prototype.filter.call(forms, function(form) {
+
+		form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+			form.classList.add('was-validated');
+			
+			if (form.checkValidity() === false) {
+                
+				const inputs = Array.from(form.elements);
+				const elements = inputs.filter((e) => e.tagName !== 'BUTTON');
+				
+				elements.map( ( element ) => validInput( element ));
+				
+            } else {
+				
+				const formData = $(form).serialize();
+				const button = $('button[type="submit"]');
+				const label_button = button.html();
+				const label_loading = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Procesando...';
+
+				$.ajax({
+					type: 'POST',
+					dataType: 'JSON',
+					url: $(form).attr('action'),
+					data: formData,
+				})
+				.done(function(response) {
+					
+					const title = response.suceed ? '¡Buen trabajo!' : '¡Ooops!';
+					const icon  = response.suceed ? 'success' : 'error';
+
+					Swal.fire(
+						title,
+						response.mensaje,
+						icon
+					);
+				})
+				.fail(function(data) {
+					Swal.fire({
+						footer: '<code>Si el error persiste, escríbanos a {{ " " }}{{constant('CORREO_CONTACTO')}}</code>',
+						icon: 'error',
+						text: response.mensaje,
+						title: 'Ooops!'
+					});
+				});
+			}
+        }, false);
+        });
+    }, false);
+    })();
+
+	const messagePattern = {
+		'tel': 'Escriba solo números',
+		'email': 'Escriba un email válido'
+	}
+	
+    
+	function validInput(input) {
+		
+        const { value, name, tagName, type } = input;
+		const error = $(`${tagName}[name="${name}"]`).next('.invalid-feedback');
+		const validityState = input.validity;
+		
+		let message = '';
+		
+		if( validityState.valueMissing ) {
+			message = 'Este campo es requerido';
+		} 
+		else if ( validityState.tooShort ) {
+			message = ( type === 'tel') ? 
+				`Debe contener ${input.minLength} dígitos`:
+				(type === 'password') ? 
+				`Debe contener mínimo ${input.minLength} caracteres`:
+				`Debe contener más de ${input.minLength} caracteres`;
+		}
+		else if ( validityState.typeMismatch || validityState.patternMismatch ) {
+			message = messagePattern[input.type];
+		}
+		else if ( validityState.customError ) {
+			return false;
+		}
+
+		error.html(message);
+
+    }
+
+	function verifyPassword(evt) {
+		
+		const passcfm = evt.srcElement;
+		const pass = document.querySelector('input[name="clave"]');
+		const error = $(`${passcfm.tagName}[name="${passcfm.name}"]`).next('.invalid-feedback');
+		const form = document.querySelector('form.needs-validation');
+		!(form.classList.contains('was-validated')) && form.classList.add('was-validated');
+		let message = ''
+		
+		passcfm.setCustomValidity('');
+		if (passcfm.value != pass.value) {
+			message = 'La confirmación y la nueva contraseña no son iguales.';
+		}
+		passcfm.setCustomValidity(message);
+		error.html(message);
+
+	}
+
+    </script>
+{% endblock %}

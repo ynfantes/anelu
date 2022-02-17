@@ -1,0 +1,113 @@
+<div class="invalid-feedback"></div>
+{% for condominio in cuentas %}
+    <h5>{{condominio.inmueble.nombre_inmueble ~ ' - ' ~ condominio.propiedades.apto}}</h5>
+    {% if not condominio.propiedades is empty %}
+        {% set fact_usd = (condominio.inmueble.facturacion_usd == '1') and (condominio.inmueble.moneda == 'Bs') %}
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="thead-light">
+                <tr class='text-center'>
+                    <th>Nº Fact.</th>
+                    <th>Período</th>
+                    <th>{{'Facturado %s'|format(condominio.inmueble.moneda)}}  </th>
+                    <th>{{'Pagado %s'|format(condominio.inmueble.moneda)}}</th>
+                    <th>{{'Saldo %s'|format(condominio.inmueble.moneda)}}</th>
+                    {% if fact_usd %}<th>Deuda USD</th>{% endif %}
+                    <th>Status</status>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = { facturado: 0, pagado:0, deuda_usd:0, recibos:0 } %}
+                {% set counter = 0 %}
+                {% for item in condominio.cuentas %}
+                    {% 
+                    set total = {
+                        facturado:  total.facturado + item.facturado,
+                        pagado: total.pagado + item.abonado,
+                        deuda_usd:  total.deuda_usd + item.facturado_usd,
+                        recibos:   total.recibos + item.recibos
+                        } 
+                    %}    
+                    <tr>
+                        <td class="text-center">
+                            <input type="hidden" name="id_inmueble[]" value="{{item.id_inmueble}}"/>
+                            <input type="hidden" name="id_apto[]" value="{{item.apto}}"/>
+                            <input type="hidden" name="periodo[]" value="{{item.periodo}}"/>
+                            <input type="hidden" name="facturas[]" value="{{item.numero_factura}}"/>
+                            <div class="custom-control custom-checkbox">
+                                <input 
+                                    class="custom-control-input" 
+                                    id="{{item.periodo| date("mY")}}" 
+                                    name="id[]" 
+                                    type="checkbox" 
+                                    value="{{counter}}" 
+                                    {% if item.pagado == 1 %} disabled {% endif %}
+                                />
+                                <label class="custom-control-label" for="{{item.periodo| date("mY")}}">
+                                {% if item.aviso %}
+                                    <a href="{{constant('URL_SISTEMA')}}avisos/ver/{{ item.numero_factura}}" target="_blank">{{item.numero_factura}}</a>
+                                {% else %}
+                                    <abbr title="Aviso de Cobro NO DISPONIBLE" class="initialism">{{item.numero_factura}}</abbr>
+                                {% endif %}    
+
+                                </label>
+                            </div>
+                        </td>
+                        <td class="text-center">{{item.periodo| date("m-Y")}}</td>
+                        <td class="text-right">{{format_number(item.facturado,2) }}</td>
+                        <td class="text-right">{{format_number(item.abonado,2) }}</td>
+                        <td class="text-right">
+                        <input type="hidden" name="montos[]" value="{{item.facturado - item.abonado}}" />
+                        {{format_number(item.facturado - item.abonado,2) }}
+                        </td>
+                        {% if fact_usd %}<td class="text-right">{{item.facturado_usd|number_format(2,'.') }}</td>{% endif %}
+                        <td>
+                        {% if item.pagado == 0 %} 
+                            <span class="badge border border-success text-success">Pendiente</span>
+                        {% else %}
+                            <a 
+                                href="javascript:void(0);" 
+                                data-html="true" 
+                                title
+                                data-original-title='{{item.pagado_detalle}}'
+                                data-template='<div class="tooltip" role="tooltip"><div class="tooltip-inner fs-xl bg-danger-700"></div></div>' 
+                                data-placement="top" 
+                                data-toggle="tooltip" 
+                                class="badge border border-danger text-danger"
+                            >Pago en proceso</a> 
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {% flush %}
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+            </tbody>
+            <tfoot class="tfoot-light">
+                <tr>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-right">{{format_number(total.facturado) }}</td>
+                    <td class="text-right">{{format_number(total.pagado) }}</td>
+                    <td class="text-right">{{format_number(total.facturado - total.pagado) }}</td>
+                    <td class="text-right"></td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <div class="alert alert-warning alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+                <div class="alert-icon width-6">
+                    <span class="icon-stack icon-stack-lg">
+                        <i class="base-2 icon-stack-3x color-warning-400"></i>
+                        <i class="base-10 text-white icon-stack-1x"></i>
+                        <i class="ni md-profile color-warning-800 icon-stack-2x"></i>
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <span class="h3">No hemos encontrado la inforamción solicitada</span>
+                    <br>
+                    Ha ocurrido un error mientras consultábamos el estado de cuenta general del condominio.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
