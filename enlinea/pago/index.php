@@ -13,22 +13,22 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
 switch ($accion) {
     
     case "cancelacion":
-        $titulo = $_GET['id'] . ".pdf";
+        $titulo  = $_GET['id'] . ".pdf";
         $content = 'Content-type: application/pdf';
-        $url = ROOT."cancelacion.gastos/" . $_GET['id'] . ".pdf";
+        $url     = ROOT."cancelacion.gastos/" . $_GET['id'] . ".pdf";
         header('Content-Disposition: inline; filename="' . $titulo . '"');
         header($content);
         readfile($url,false);
         break;
     
-    case "listarRecibosCancelados":
+    case "historico":
         $propiedad = new propiedades();
         $inmuebles = new inmueble();
         $pagos = new pago();
 
         $propiedades = $propiedad->propiedadesPropietario($_SESSION['usuario']['cedula']);
         $cuenta = [];
-
+        
         if ($propiedades['suceed'] == true) {
 
             foreach ($propiedades['data'] as $propiedad) {
@@ -36,14 +36,12 @@ switch ($accion) {
                 $inmueble = $inmuebles->ver($propiedad['id_inmueble']);
                 $pago = $pagos->listarCancelacionDeGastos($propiedad['id_inmueble'], $propiedad['apto']);
                 
-                if ($pago['suceed'] == true) {
+                if ($pago['suceed'] === true) {
                     
-                    $bitacora->insertar([
-                        'id_sesion'   => $session['id_sesion'],
-                        'id_accion'   => ACTION::CONSULTA_RECIBOS_CANCELADOS,
-                        'descripcion' => count($pago['data'])." recibos(s) registrado(s).",
-                    ]);
-
+                    // $bitacora->insertar([ 'id_sesion'   => $session['id_sesion'],
+                    //                       'id_accion'   => ACTION::CONSULTA_RECIBOS_CANCELADOS,
+                    //                       'descripcion' => count($pago['data'])." recibos(s) registrado(s).",]);
+                    
                     for ($index = 0; $index < count($pago['data']); $index++) {
                         
                         $filename = "../../cancelacion.gastos/" . $pago['data'][$index]['numero_factura'] . ".pdf";
@@ -51,17 +49,20 @@ switch ($accion) {
                         
                     }
                     
-                    $cuenta[] = ['inmueble'     => $inmueble['data'][0],
-                                 'propiedades'  => $propiedad,
-                                 'cuentas'      => $pago['data']];
-                        
-
+                    $cuenta[] = ['inmueble'    => $inmueble['data'][0],
+                                 'propiedades' => $propiedad,
+                                 'cuentas'     => $pago['data']];
                 }
+                
             }
         }
-        
-        echo $twig->render('enlinea/pago/cancelacion.gastos.html.twig', ["session" => $session, "cuentas" => $cuenta]);
-
+        $params = [
+            'seccion' => 'Recibos Cancelados',
+            'icon'    => 'th-list',
+            'cuentas' => $cuenta,
+            'session' => $session,
+        ];
+        echo $twig->render('enlinea/pago/cancelacion.gastos.twig', $params);
         break; 
     
     case "ver":
@@ -70,9 +71,9 @@ switch ($accion) {
         $pagos = new pago();
 
         $propiedades = $propiedad->propiedadesPropietario($_SESSION['usuario']['cedula']);
-        $cuenta = Array();
+        $cuenta = [];
         
-        if ($propiedades['suceed'] == true) {
+        if ($propiedades['suceed'] === true) {
             
             foreach ($propiedades['data'] as $propiedad) {
                 
@@ -81,28 +82,26 @@ switch ($accion) {
                 $inmueble = $inmuebles->ver($propiedad['id_inmueble']);
                 $pago = $pagos->listarPagosProcesados($propiedad['id_inmueble'], $propiedad['apto'], 5);
                 
-                if ($pago['suceed'] == true) {
-                    $bitacora->insertar(Array(
-                        "id_sesion"   => $session['id_sesion'],
-                        "id_accion"   => 12,
-                        "descripcion" => count($pago['data'])." recibos(s) registrado(s).",
-                    ));
+                if ($pago['suceed'] === true) {
+
+                    $bitacora->insertar( [ "id_sesion"   => $session['id_sesion'],
+                                          "id_accion"   => ACTION::VER_CANCELACION_GASTOS,
+                                          "descripcion" => 'Lista ('.count($pago['data']).') pago(s)' ] );
+
                     for ($index = 0; $index < count($pago['data']); $index++) {
                         $filename = "../../cancelacion.gastos/" . $pago['data'][$index]['id_factura'] . ".pdf";
                         $pago['data'][$index]['recibo'] = file_exists($filename);
                     }
 
-                    $cuenta[] = Array("inmueble" => $inmueble['data'][0],
-                        "propiedades" => $propiedad,
-                        "cuentas" => $pago['data'],
-                        "legal"=>$legal
-                            );
+                    $cuenta[] = [ "inmueble"    => $inmueble['data'][0],
+                                  "propiedades" => $propiedad,
+                                  "cuentas"     => $pago['data'],
+                                  "legal"       => $legal ];
                 }
             }
         }
 
-        echo $twig->render('enlinea/pago/cancelacion.html.twig', array("session" => $session,
-            "cuentas" => $cuenta));
+        echo $twig->render( 'enlinea/pago/cancelacion.html.twig', ["session" => $session,"cuentas" => $cuenta] );
 
 
         break; 
@@ -400,7 +399,7 @@ switch ($accion) {
         }
         break; 
 
-    case "historico":
+    case "movimientocaja":
         $propiedad = new propiedades();
         $pagos = new pago();
         $inmuebles = new inmueble();
@@ -440,10 +439,10 @@ switch ($accion) {
         }
         $params = [ 
                     'historicos'   => $historico, 
-                    'propiedades'  => $propiedad,
-                    'session'      => $session,
                     'icon'         => 'clipboard-list-check',
-                    'seccion'        => 'Recibos Cancelados',
+                    'propiedades'  => $propiedad,
+                    'seccion'      => 'Listado de pagos',
+                    'session'      => $session,
                 ];
 
         echo $twig->render('enlinea/pago/historico.twig', $params);

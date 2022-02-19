@@ -1,2 +1,3 @@
 /.vscode
-/include/configuracion.php
+/includes/configuracion.php
+/data/*

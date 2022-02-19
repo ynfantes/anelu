@@ -8,7 +8,7 @@ $bitacora = new bitacora();
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "ver";
 $id = isset($_GET['id']) ? $_GET['id'] : "perfil";
-if ($id!= 'sac' && !is_numeric($id)) {
+if ($id != 'sac' && !is_numeric($id)) {
     $propietario->esPropietarioLogueado();
     $session = $_SESSION;
 }
@@ -22,8 +22,8 @@ switch ($accion) {
         
         $bitacora->insertar(
             [
-                'descripcion' => $_SESSION['usuario']['nombre'],
-                'id_accion'   => 3,
+                'descripcion' => 'Consulta Datos.',
+                'id_accion'   => $accion === 'ver' ? ACTION::CONSULTA_DATOS_PERSONALES : ACTION::CAMBIO_DE_CLAVE,
                 'id_sesion'   => $session['id_sesion'],
             ]
         );
@@ -32,8 +32,8 @@ switch ($accion) {
             'id'          => $id,
             'propietario' => $datos_personales['data'][0],
             'session'     => $session,
-            'seccion'     => $accion = 'ver' ? 'Perfil' : 'Cambiar Contraseña',
-            'icon'        => $accion = 'ver' ?'address-card': 'shield-check',
+            'seccion'     => $accion === 'ver' ? 'Perfil' : 'Cambiar Contraseña',
+            'icon'        => $accion === 'ver' ? 'address-card' : 'shield-check',
         ];
         
         echo $twig->render('enlinea/propietario/datos-personales.twig', $params);
@@ -43,7 +43,7 @@ switch ($accion) {
         $data = $_POST;
         unset($data['actualizar']);
         
-        if ($_GET['id'] == 'perfil') {
+        if ($_GET['id'] === 'perfil') {
             
             $exito = $propietario->actualizar($session['usuario']['id'], $data);
             $mensaje = $exito['suceed'] ? 
@@ -53,7 +53,7 @@ switch ($accion) {
             $bitacora->insertar([
 
                 'descripcion'   => '',
-                'id_accion'     => 14,
+                'id_accion'     => ACTION::ACTUALIZA_DATOS_PERSONALES,
                 'id_sesion'     => $session['id_sesion']
 
             ]);
@@ -64,7 +64,7 @@ switch ($accion) {
             
             if ($exito['suceed'] && count($exito['data']) > 0) {
 
-                if ($exito['data'][0]['clave'] == $data['clave_actual']) {
+                if ($exito['data'][0]['clave'] === $data['clave_actual']) {
 
                     unset($data['clave_actual']);
                     unset($data['clave_confirm']);
@@ -72,23 +72,25 @@ switch ($accion) {
                     $exito = $propietario->actualizar($session['usuario']['id'], $data);
                     
                     $mensaje = "Su cambio de contraseña se ha procesado con éxito!";
-                    $bitacora->insertar([
-
-                        'descripcion' => '',
-                        'id_accion'   => 7,
-                        'id_sesion'   => $session['id_sesion'],
-
-                    ]);
+                    $bitacora->insertar([ 'descripcion' => 'Procesado con éxito',
+                                          'id_accion'   => ACTION::CAMBIO_DE_CLAVE,
+                                          'id_sesion'   => $session['id_sesion'] ]);
 
                 } else {
                     
                     $mensaje = "No hemos podido cambiar su contraseña. La contraseña actual no corresponde con la contraseña registrada";
                     $exito['suceed'] = false;
+                    $bitacora->insertar([ 'descripcion' => 'Contraseña actual incorrecta',
+                                          'id_accion'   => ACTION::CAMBIO_DE_CLAVE,
+                                          'id_sesion'   => $session['id_sesion'] ]);
 
                 }
             } else {
 
                 $mensaje = "Ha ocurrido un error durante el procesamiento de su solicitud.";
+                $bitacora->insertar([ 'descripcion' => 'Ocurrió un error durante el proceso',
+                                          'id_accion'   => ACTION::CAMBIO_DE_CLAVE,
+                                          'id_sesion'   => $session['id_sesion'] ]);
 
             }
         
