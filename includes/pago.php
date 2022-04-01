@@ -55,7 +55,11 @@ class pago extends db implements crud {
     }
 
     public function listarPagosPendientes(){
-        return $this->select("*", self::tabla, Array("estatus"=>"'p'"));
+        //return $this->select("*", self::tabla, Array("estatus"=>"'p'"));
+        $query = 'select distinct pagos.* from pagos inner join pago_detalle on pagos.id = pago_detalle.id_pago 
+                where pagos.estatus="p" 
+                order by pago_detalle.id_inmueble, pago_detalle.id_apto, pagos.fecha desc';
+        return $this->dame_query($query);
     }
     
     public function detallePagoPendiente($id_pago) {
