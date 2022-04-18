@@ -235,10 +235,10 @@ switch ($accion) {
             echo "id_pago,id_inmueble,id_apto,monto,id_factura<br>";
             foreach ($pago_detalle['data'] as $value) {
                 echo $value['id_pago'] . ",";
-                echo $value['id_inmueble'] . ",";
-                echo $value['id_apto'] . ",";
+                echo "\"".$value['id_inmueble']."\",";
+                echo "\"".$value['id_apto'] . "\",";
                 echo $value['monto'] * 100 . ",";
-                echo $value['id_factura'];
+                echo "\"".$value['id_factura']."\"";
                 echo "<br>";
             }
         }
