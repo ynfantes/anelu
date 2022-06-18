@@ -1,7 +1,9 @@
 <?php
 include_once '../../includes/configuracion.php';
-$propietario = new propietario();
+ini_set('max_execution_time', 120);
+
 if (!isset($_GET['id'])) {    
+    $propietario = new propietario();
     $propietario->esPropietarioLogueado();
     $session = $_SESSION;
 }
@@ -245,29 +247,32 @@ switch ($accion) {
         break; 
 
     case "listaPagosMaestros":
+        
         $pagos = new pago();
+        //$pagos_maestro = $pagos->listar(['estatus' => "'p'"]);
         $pagos_maestro = $pagos->listarPagosPendientes();
-
+        
         if ($pagos_maestro['suceed'] && count($pagos_maestro['data']) > 0) {
             echo "id,fecha,tipo_pago,numero_documento,fecha_documento,monto,banco_origen,";
             echo "banco_destino,numero_cuenta,estatus,email,enviado,telefono<br>";
             foreach ($pagos_maestro['data'] as $pago) {
                 echo $pago['id'] . ",";
-                echo Misc::date_format($pago['fecha']) . ",";
-                echo strtoupper($pago['tipo_pago']) . ","; 
+                echo Misc::date_format($pago['fecha']).',';
+                echo "\"".strtoupper($pago['tipo_pago'])."\","; 
                 echo $pago["numero_documento"] . ",";
-                echo Misc::date_format($pago["fecha_documento"]) . ",";
-                echo $pago["monto"] * 100 . ",";
-                echo $pago["banco_origen"] . ",";
-                echo $pago["banco_destino"] . ",";
-                echo str_replace("-", "", "#".$pago["numero_cuenta"]) . ",";
-                echo strtoupper($pago["estatus"]) . ",";
-                echo $pago["email"] . ",";
+                echo Misc::date_format($pago["fecha_documento"]).',';
+                echo $pago["monto"] * 100 . ',';
+                echo "\"". $pago["banco_origen"] . "\",";
+                echo "\"".$pago["banco_destino"] . "\",";
+                echo "\"".str_replace("-", "", $pago["numero_cuenta"]) . "\",";
+                echo "\"".strtoupper($pago["estatus"]) . "\",";
+                echo "\"".$pago["email"] . "\",";
                 echo $pago["enviado"] . ",";
                 echo $pago["telefono"];
                 echo "<br>";
             }
         }
+        //echo json_encode($pagos_maestro);
         break; 
 
     case "listarPagosPendientes":

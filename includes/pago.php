@@ -34,8 +34,8 @@ class pago extends db implements crud {
     public function insertarDetallePago($data) {
         return $this->insert("detalle_pago", $data);
     }
-    public function listar(){
-       return $this->select("*", self::tabla);
+    public function listar($condicion = null){
+       return $this->select("*", self::tabla, $condicion);
     }
     
     public function ver($id){
@@ -58,7 +58,7 @@ class pago extends db implements crud {
         //return $this->select("*", self::tabla, Array("estatus"=>"'p'"));
         $query = 'select distinct pagos.* from pagos inner join pago_detalle on pagos.id = pago_detalle.id_pago 
                 where pagos.estatus="p" 
-                order by pago_detalle.id_inmueble, pago_detalle.id_apto, pagos.fecha desc';
+                order by pago_detalle.id_inmueble, pago_detalle.id_apto, pagos.fecha desc LIMIT 0 , 600';
         return $this->dame_query($query);
     }
     

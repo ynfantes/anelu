@@ -183,7 +183,7 @@ foreach ($lineas as $linea) {
        $r = $propietario->insertar($registro);
        if($r["suceed"]==FALSE){
             echo "<b>Archivo Propietario: ".$archivo.' - '.$r['stats']['errno']."-".$r['stats']['error']."</b>".'<br/>'.$r['query'].'<br/>';
-            die($r['query']);
+            //die($r['query']);
         }
             /*}
         }*/
@@ -468,7 +468,7 @@ if (file_exists($archivo)) {
 
 
             if ($r["suceed"] == FALSE) {
-                die($r['stats']['errno'] . "<br />" . $r['stats']['error'] . '<br/>' . $r['query']);
+                echo($r['stats']['errno'] . "<br />" . $r['stats']['error'] . '<br/>' . $r['query']);
             }
         }
     }
