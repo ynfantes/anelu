@@ -1,7 +1,8 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-include_once '../../includes/constants.php';
+
+include_once '../../includes/configuracion.php';
 
 $app->post('/cancelacion/registro', function(Request $req, Response $res) {
     

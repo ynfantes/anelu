@@ -2,9 +2,7 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-include_once '../../includes/constants.php';
-
-
+include_once '../../includes/configuracion.php';
 
 $app->post('/facturas/insert', function(Request $req, Response $res) {
     try {
@@ -16,6 +14,7 @@ $app->post('/facturas/insert', function(Request $req, Response $res) {
             unset($fact['id'],$fact['fidea']);
             $result = $factura->insertarActualizar($fact);
             $data[$index]['suceed'] = $result['suceed'];
+            $data[$index]['stats'] = $result['stats'];
         }
         $newRes = $res->withJson($data);
         return $newRes;
@@ -36,6 +35,7 @@ $app->delete('/facturas/delete', function(Request $req, Response $res) {
             unset($fact['id']);
             $result = $factura->borrarFactura($fact);
             $data[$index]['suceed'] = $result['suceed'];
+            $data[$index]['stats'] = $result['stats'];
         }
         $newRes = $res->withJson($data);
         return $newRes;

@@ -4,7 +4,7 @@ header('Content-Type: application/json; charset=utf-8');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-include_once '../../includes/constants.php';
+include_once '../../includes/configuracion.php';
 
 $app->get('/propietarios/actualizados', function(Request $req, Response $res) {
     

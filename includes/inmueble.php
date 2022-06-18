@@ -65,19 +65,11 @@ class inmueble extends db implements crud {
     }
     
     public function insertarFacturacionMensual($data) {
-        $query = "insert into facturacion_mensual(id_inmueble,periodo,facturado) "
-                . "VALUES('".$data['id_inmueble']."','".$data['periodo']."','".$data['facturado']."') ON DUPLICATE KEY "
-                . "UPDATE facturado='".$data['facturado']."'";
-        
-        return db::exec_query($query);
+        return db::insertUpdate('facturacion_mensual',$data, ['facturado' => $data['facturado']]);
     }
     
     public function insertarCobranzaMensual($data) {
-        $query = "insert into cobranza_mensual(id_inmueble,periodo,monto) "
-                . "VALUES('".$data['id_inmueble']."','".$data['periodo']."','".$data['monto']."') ON DUPLICATE KEY "
-                . "UPDATE monto='".$data['monto']."'";
-        
-        return db::exec_query($query);
+        return db::insertUpdate('cobranza_mensual',$data, ['monto' => $data['monto']]);
     }
     
     public function listarInmueblesPorPropietario($cedula) {
@@ -87,7 +79,7 @@ class inmueble extends db implements crud {
     }
 
     public function agregarCuentaInmueble($data) {
-        return db::insert("inmueble_cuenta", $data,"IGNORE");
+        return db::insertUpdate("inmueble_cuenta", $data, $data);
     }
     public function obtenerCuentasBancariasPorInmueble($inmueble) {
         return db::select("*","inmueble_cuenta",["id_inmueble" => "'$inmueble'"]);
@@ -115,5 +107,30 @@ class inmueble extends db implements crud {
     
     public function listarBancosActivos(){
         return db::select("*","bancos",["inactivo"=>0],[],['nombre' => 'ASC']);
+    }
+
+    public function borrarGrupo($condicion) {
+        db::delete('grupo_propietario',$condicion);
+        return db::delete('grupo',$condicion);
+    }
+
+    public function insertarGrupo($data) {
+        return db::insertUpdate("grupo", $data,['descripcion'=>$data['descripcion']]);
+    }
+
+    public function insertarGrupoPropietario($data) {
+        return db::insert("grupo_propietario", $data,"IGNORE");
+    }
+
+    public function insertarActualizar($data) {
+        $act = $data;
+        unset($act['id']);
+        return db::insertUpdate(self::tabla,$data,$act);
+    }
+    
+    public function insertarActualizarEstadoDeCuentaInmueble($data) {
+        $act = $data;
+        unset($act['id_inmueble'],$act['apto']);
+        return db::insertUpdate("inmueble_deuda_confidencial", $data,$act);
     }
 }

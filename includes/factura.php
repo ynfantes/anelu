@@ -88,6 +88,14 @@ class factura extends db implements crud {
         $result = db::query($sql);
         return $result;
     }
-}
 
-?>
+    public function insertarActualizar($data){
+        $update = $data;
+        unset($update['id_inmueble'],$update['apto'],$update['periodo']);
+        return db::insertUpdate(self::tabla, $data,$update);
+    }
+
+    public function borrarFactura($data) {
+        return db::delete(self::tabla,$data);
+    }
+}
