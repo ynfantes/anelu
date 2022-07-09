@@ -1,6 +1,6 @@
 <?php
 header ('Content-type: text/html; charset=utf-8');
-
+die('Proceso deprecado');
 include_once 'includes/db.php';
 include_once 'includes/file.php';
 include_once 'includes/inmueble.php';
