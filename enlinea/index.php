@@ -1,6 +1,6 @@
 <?php
 include_once '../includes/configuracion.php';
-include_once '../includes/file.php';
+//include_once '../includes/file.php';
 
 $f            = new factura();
 $p            = new pago();
@@ -12,8 +12,8 @@ $facturas     = new factura();
 
 propietario::esPropietarioLogueado();
 
-$archivo = '../'.ACTUALIZ.ARCHIVO_ACTUALIZACION;
-$fecha_actualizacion = JFile::read($archivo);
+// $archivo = '../'.ACTUALIZ.ARCHIVO_ACTUALIZACION;
+$fecha_actualizacion = null;
 
 $session = $_SESSION;
 
@@ -43,6 +43,7 @@ if ($propiedades['suceed']) {
 
     if($inmueble['suceed']) {
         $moneda = $inmueble['data'][0]['moneda'];
+        $fecha_actualizacion = $inmueble['data'][0]['fecha_actualizacion'];
     }
 
     $facturacion = $inmuebles->movimientoFacturacionMensual($propiedades['data'][0]['id_inmueble']);

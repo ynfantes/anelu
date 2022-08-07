@@ -108,7 +108,7 @@ class mailto {
             if ($cc != null) {
                 $this->mail->AddCC($cc);
             }
-            $this->mail->AddBCC("ynfantes@gmail.com","Edgar Messia");
+            //$this->mail->AddBCC("ynfantes@gmail.com","Edgar Messia");
         }
         
         $this->mail->IsHTML(true);
