@@ -98,4 +98,14 @@ class factura extends db implements crud {
     public function borrarFactura($data) {
         return db::delete(self::tabla,$data);
     }
+
+    public function listarFacturasConNumFact() {
+        
+        $sql = 'SELECT numero_factura, id_inmueble, apto  
+            FROM facturas 
+            WHERE numero_factura is not null and numero_factura <> ""
+            ORDER BY id_inmueble, apto, periodo';
+
+        return db::query($sql);
+    }
 }

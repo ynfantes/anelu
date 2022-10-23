@@ -3,12 +3,11 @@
 		<i class='subheader-icon fal fa-{{icon ? icon : 'chalkboard'}}'> </i>&nbsp;{{ seccion }}
 	</h1>
 	<div class="mr-2">
-		{% set tasa = tasa_bcv.dolar  %}
 		<img src="{{ constant('ROOT') }}assets/img/icons/bcv.webp" heigth="40" width="40" />
 	</div>
 	<div>
 		<label class="fs-sm mb-0 mt-2 mt-md-0">Tasa de cambio BCV</label>
-		<h4 class="font-weight-bold mb-0 color-primary-500">{{format_mysql_number(tasa)|round(2, 'common')}}</h4>
+		<h4 class="font-weight-bold mb-0 color-primary-500" id="tasa_bcv">--</h4>
 	</div>
     
 </div>
