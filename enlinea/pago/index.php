@@ -250,7 +250,7 @@ switch ($accion) {
         
         $pagos = new pago();
         //$pagos_maestro = $pagos->listar(['estatus' => "'p'"]);
-        $pagos_maestro = $pagos->listarPagosPendientes();
+        $pagos_maestro = $pagos->listarPagosPendientes($_GET['id']);
         
         if ($pagos_maestro['suceed'] && count($pagos_maestro['data']) > 0) {
             echo "id,fecha,tipo_pago,numero_documento,fecha_documento,monto,banco_origen,";
@@ -277,7 +277,7 @@ switch ($accion) {
 
     case "listarPagosPendientes":
         $pagos = new pago();
-        $pagos_maestro = $pagos->listarPagosPendientes();
+        $pagos_maestro = $pagos->listarPagosPendientes($_GET['id']);
         
         if ($pagos_maestro['suceed'] && count($pagos_maestro['data']) > 0) {
             
