@@ -10,13 +10,13 @@
         <div class="invalid-feedback"></div>
     </div>
     <div class="col-md-4 mb-3">
-        <label for="numero_documento">Número de Referencia <span class="text-danger">*</span> <span class="help-block">(solo números)</span></label>
+        <label for="numero_documento">Número de Referencia <span class="text-danger">*</span> <span class="help-block">(últimos 6 dígitos)</span></label>
         <input
             class="form-control" 
             id="numero_documento"
             maxlength="6"
             name= "numero_documento"
-            pattern="[0-9]{4,6}"
+            pattern="[0-9]{6,6}"
             required
             type="text"
             value="{{propietario.telefono2}}"
