@@ -1,0 +1,88 @@
+{% extends 'layout/app.base.twig' %}
+{% block contenido %}
+{% set n = 0 %}
+    
+    {% for item in listado %}
+        
+        <div class="panel">
+            <div class="panel-hdr">
+                <h2>
+                {{item.inmueble.nombre_inmueble}}
+                <div class="panel-toolbar">
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                </div>
+            </div>
+            <div class="panel-container show">
+                <div class="panel-content">
+                    
+                    {% if item.prerecibos is empty %}
+
+                        <div class="alert alert-warning alert-dismissible fade show">
+                            <div class="d-flex align-items-center">
+                                <div class="alert-icon width-6">
+                                    <span class="icon-stack icon-stack-lg">
+                                        <i class="base-2 icon-stack-3x color-warning-400"></i>
+                                        <i class="base-10 text-white icon-stack-1x"></i>
+                                        <i class="ni md-profile color-warning-800 icon-stack-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-1">
+                                    <span class="h3">Información no registrada</span>
+                                    <br>
+                                    No se han publicado facturas.
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <table class="table table-striped table-bordered table-hover table-sm">
+                            <thead class="thin-border-bottom">
+                                <th class="text-center">Período Facturación</th>
+                                <th class="hidden-xs" style="text-align: center">Pre-recibo</th>
+                                <th class="text-center">Facturas</th>
+                                <!--th class="hidden">id</th-->
+                            </thead>
+                            <tbody>
+                                {% for detalle in item.prerecibos %}
+                                <tr>
+                                <td class="text-center">{{detalle.periodo | date("m-Y")}}</td>
+                                <td>
+                                    {% if detalle.pub_pre %}
+                                        <a href="{{constant('URL_SISTEMA')}}/prerecibo/ver/{{detalle.documento}}" title="ver">{{detalle.documento}}</a>
+                                    {% else %}
+                                        {{detalle.documento}}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-toolbar">
+                                        <div class="btn-group">
+                                            {% if detalle.soporte is empty %}
+                                                <span class="label label-warning">No publicados</span>
+                                            {% else %}
+                                                <a 
+                                                    title="click para descargar" 
+                                                    href="{{constant('URL_SISTEMA')}}/prerecibo/ver/{{detalle.soporte}}" 
+                                                    class="btn btn-sm btn-success waves-effect waves-themed" 
+                                                >
+                                                <span class="fal fa-eye mr-1"></span> 
+                                                Ver facturas
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <!--td class="hidden">{{detalle.id}}</td-->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                    {% set n = n + 1 %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

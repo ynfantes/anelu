@@ -215,7 +215,7 @@ switch ($accion) {
         break; 
 
     case "cartelera":
-        $cartelera = new cartelera();
+        //$cartelera = new cartelera();
         $propiedad = new propiedades();
         $archivo = '../../'.ACTUALIZ.ARCHIVO_ACTUALIZACION;
         $fecha_actualizacion = JFile::read($archivo);

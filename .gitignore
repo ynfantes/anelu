@@ -1,3 +1,4 @@
 /.vscode
 /includes/configuracion.php
 /data/*
+/enlinea/prerecibo/*.pdf
