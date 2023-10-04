@@ -49,11 +49,7 @@
                                 <tr>
                                 <td class="text-center">{{detalle.periodo | date("m-Y")}}</td>
                                 <td>
-                                    {% if detalle.pub_pre %}
-                                        <a href="{{constant('URL_SISTEMA')}}/prerecibo/ver/{{detalle.documento}}" title="ver">{{detalle.documento}}</a>
-                                    {% else %}
-                                        {{detalle.documento}}
-                                    {% endif %}
+                                    {{detalle.documento}}
                                 </td>
                                 <td>
                                     <div class="btn-toolbar">
