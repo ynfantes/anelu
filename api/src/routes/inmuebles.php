@@ -137,7 +137,7 @@ $app->put('/propietarios/grupo', function(Request $req, Response $res) {
             $r = $inmueble->insertarGrupo($prop);
             $result[$item]['suceed'] = $r['suceed'];
             $result[$item]['stats'] = $r['stats'];
-            if ($r['stats']['error']) $result[$item]['query'] = $r['query'];
+            if (isset($r['stats']['error'])) $result[$item]['query'] = $r['query'];
             
         }
         $newRes = $res->withJson($result);
