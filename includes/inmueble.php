@@ -133,4 +133,8 @@ class inmueble extends db implements crud {
         unset($act['id_inmueble'],$act['apto']);
         return db::insertUpdate("inmueble_deuda_confidencial", $data,$act);
     }
+
+    public function borrarCuentaBancaria($inmueble,$num_cuenta) {
+        return db::delete('inmueble_cuenta',['id_inmueble'=>$inmueble, 'numero_cuenta'=>$num_cuenta]);
+    }
 }
