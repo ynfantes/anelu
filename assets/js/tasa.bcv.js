@@ -1,4 +1,4 @@
-fetch('https://exchangemonitor.net/ajax/widget-unique?country=ve&type=bcv')
+fetch('https://v2.web.ve/bcv/')
 .then((response) => response.json())
 .then((data) => {
     const element = document.getElementById('tasa_bcv');

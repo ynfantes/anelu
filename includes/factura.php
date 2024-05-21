@@ -108,4 +108,20 @@ class factura extends db implements crud {
 
         return db::query($sql);
     }
+
+    public function listarDiferenciasRecibosPendientesPorPropietario() {
+        
+        $sql = "select p.codinm, p.apto, p.recibos, f.f_recibos as meses_pendiente , p.clave
+            from propietarios p 
+            inner join (
+                SELECT COUNT(apto) as f_recibos, id_inmueble, apto 
+                FROM `facturas` 
+                GROUP BY id_inmueble, apto
+            ) f on p.codinm=f.id_inmueble 
+            and p.apto = f.apto 
+            where p.recibos <> f.f_recibos
+            order by p.codinm, p.apto";
+        
+        return db::query($sql);
+    }
 }
