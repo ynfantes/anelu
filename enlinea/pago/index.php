@@ -253,11 +253,13 @@ switch ($accion) {
         $pagos_maestro = $pagos->listarPagosPendientes($_GET['id']);
         
         if ($pagos_maestro['suceed'] && count($pagos_maestro['data']) > 0) {
+            
             echo "id,fecha,tipo_pago,numero_documento,fecha_documento,monto,banco_origen,";
             echo "banco_destino,numero_cuenta,estatus,email,enviado,telefono<br>";
             foreach ($pagos_maestro['data'] as $pago) {
+                $payDate = new DateTime($pago['fecha']);
                 echo $pago['id'] . ",";
-                echo Misc::date_format($pago['fecha']).',';
+                echo $payDate->format('d/m/y h:i A').',';
                 echo "\"".strtoupper($pago['tipo_pago'])."\","; 
                 echo $pago["numero_documento"] . ",";
                 echo Misc::date_format($pago["fecha_documento"]).',';

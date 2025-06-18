@@ -157,6 +157,8 @@ class pago extends db implements crud {
                                 $moneda             = $datos_inmueble['data'][0]['moneda'];
 
                             }
+                            $payDate = new DateTime($data['fecha']);
+
                             $mensaje = sprintf($ini['CUERPO_MENSAJE_PAGO_RECEPCION_CONFIRMACION'], 
                                     $propietario,
                                     $forma_pago,
@@ -170,7 +172,7 @@ class pago extends db implements crud {
                                     $data['telefono'],
                                     $propietario,
                                     $id_pago,
-                                    date("d/m/Y")
+                                    $payDate->format('d/m/y h:i A')
                                     ); 
                             $mensaje.=$ini['PIE_MENSAJE_PAGO'];
                             
@@ -258,6 +260,7 @@ class pago extends db implements crud {
                 $moneda = $datos_inmueble['data'][0]['moneda'];
 
             }
+            $payDate = new DateTime($data['data'][0]['fecha']);
             $mensaje = sprintf($ini['CUERPO_MENSAJE_PAGO_RECEPCION_CONFIRMACION'], 
                     $propietario,
                     $forma_pago,
@@ -271,7 +274,7 @@ class pago extends db implements crud {
                     $data['data'][0]['telefono'],
                     $propietario,
                     $id,
-                    date("d/m/Y"));
+                    $payDate->format('d/m/y h:i A'));
                     $mensaje.=$ini['PIE_MENSAJE_PAGO'];
             
             $r = $mail->enviar_email("Pago de Condominio", $mensaje, "", $data['data'][0]['email']);
