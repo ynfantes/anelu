@@ -60,7 +60,7 @@ class pago extends db implements crud {
         if ($inmueble != 'sac') $condicion.= " and pago_detalle.id_inmueble='".$inmueble."'";
         $query = "select distinct pagos.* from pagos inner join pago_detalle on pagos.id = pago_detalle.id_pago ";
         $query.= "where ".$condicion." ";
-        $query.= "order by pago_detalle.id_inmueble, pago_detalle.id_apto, pagos.fecha desc LIMIT 0 , 600";
+        $query.= "order by pago_detalle.id_inmueble, pago_detalle.id_apto, pagos.fecha desc LIMIT 0 , 50";
                 
         return $this->dame_query($query);
     }

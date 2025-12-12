@@ -76,8 +76,11 @@ Class db {
             if ($this->debug) {
                 $r['query'] = $query;
             }
-
-            if ($this->mysqli->errno == 0) {
+            if ($resultado === false) {
+                // El query falló, $resultado es FALSE. Lanzamos la excepción.
+                throw new Exception("MySQL Query Failed");
+            }
+            if ($resultado instanceof mysqli_result) {
                 while ($fila = $resultado->fetch_array(MYSQLI_ASSOC)) {
                     $result[] = $fila;
                 }
@@ -85,8 +88,19 @@ Class db {
                 $r['data'] = $result;
                 $r['stats']['affected_rows'] = $this->mysqli->affected_rows;
             } else {
-                throw new Exception;
+                // El query fue exitoso pero no devolvió resultados (INSERT, UPDATE, DELETE).
+                // $resultado es TRUE.
+                $r['row'] = array();
+                $r['data'] = array();
+                $r['stats']['affected_rows'] = $this->mysqli->affected_rows; // Usar affected_rows para DML
             }
+            // El chequeo del error de MySQL después de la ejecución
+            if ($this->mysqli->errno !== 0) {
+                // Esto debería ser manejado por el chequeo de $resultado === false, 
+                // pero es una buena práctica dejarlo si necesitas doble verificación.
+                throw new Exception("MySQL Error Code: " . $this->mysqli->errno);
+            }
+
         } catch (Exception $exc) {
             $r['suceed'] = false;
             if ($this->debug) {

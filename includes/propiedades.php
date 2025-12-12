@@ -47,7 +47,7 @@ class propiedades extends db implements crud {
 
     public function propiedadesPropietario($cedula) {
         
-        $result = db::query("select * from propiedades where cedula = ".$cedula);
+        $result = db::query("select * from propiedades where cedula=$cedula");
         return $result;
     }
     
